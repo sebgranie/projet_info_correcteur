@@ -1,1 +1,3 @@
-# projet_info_correcteur
+# Correcteur orthographique
+
+## diagramme : 
