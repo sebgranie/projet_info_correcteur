@@ -1,3 +1,5 @@
+# Diagramme de classe
+
 ```puml
 @startuml
 
@@ -47,7 +49,7 @@ CorrecteurAutomatique o-- Dictionnaires
 CorrecteurInteractif ^-- CorrecteurAutomatique
 
 @enduml
-
+```
 
 
 Liste de mots en python
