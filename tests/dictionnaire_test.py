@@ -1,4 +1,4 @@
-from dictionnaire import Dictionnaire
+from sources.dictionnaire import Dictionnaire
 import pytest
 
 def test_dictionnaire_chercher_mot():

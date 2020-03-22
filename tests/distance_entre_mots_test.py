@@ -1,4 +1,4 @@
-from distance_entre_mots import CalculDistanceMots
+from sources.distance_entre_mots import CalculDistanceMots
 import pytest
 
 def test_CalculDistanceMots():
