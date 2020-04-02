@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Foire Aux Questions" />
+  <title>Projet Correcteur orthographique</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      div.line-block{white-space: pre-line;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; min-height: 1.25em; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; }
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; color: #aaaaaa;  padding-left: 4px; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; color: initial; }
+}
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.bn { color: #40a070; } /* BaseN */
+code span.fl { color: #40a070; } /* Float */
+code span.ch { color: #4070a0; } /* Char */
+code span.st { color: #4070a0; } /* String */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.ot { color: #007020; } /* Other */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.fu { color: #06287e; } /* Function */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code span.cn { color: #880000; } /* Constant */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.im { } /* Import */
+code span.va { color: #19177c; } /* Variable */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.op { color: #666666; } /* Operator */
+code span.bu { } /* BuiltIn */
+code span.ex { } /* Extension */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.at { color: #7d9029; } /* Attribute */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header>
+<h1 class="title">Projet Correcteur orthographique</h1>
+<p class="author">Foire Aux Questions</p>
+<p class="date">2019-2020</p>
+</header>
+<nav id="TOC">
+<ul>
+<li><a href="#quest-ce-que-les-fichiers-.dic"><span class="toc-section-number">1</span> Qu’est ce que les fichiers .dic</a></li>
+<li><a href="#lalgorithme-donné-pour-la-distance"><span class="toc-section-number">2</span> L’algorithme donné pour la distance</a><ul>
+<li><a href="#erreur-dans-lénoncé."><span class="toc-section-number">2.1</span> Erreur dans l’énoncé.</a></li>
+<li><a href="#mauvais-résultat"><span class="toc-section-number">2.2</span> Mauvais résultat</a></li>
+</ul></li>
+<li><a href="#est-ce-quon-peut-décider-de-ne-pas-corriger-les-mots-avec-une-seule-lettre"><span class="toc-section-number">3</span> Est-ce qu’on peut décider de ne pas corriger les mots avec une seule lettre</a></li>
+<li><a href="#est-ce-quil-faut-traiter-les-extensions-possibles"><span class="toc-section-number">4</span> Est-ce qu’il faut traiter les extensions possibles ?</a></li>
+<li><a href="#jai-des-problèmes-quand-je-lis-en-python-le-dictionnaire-caractères-bizarres"><span class="toc-section-number">5</span> J’ai des problèmes quand je lis en Python le dictionnaire (caractères bizarres)</a></li>
+<li><a href="#comment-faire-pour-écrire-dans-un-fichier-texte-en-python"><span class="toc-section-number">6</span> Comment faire pour écrire dans un fichier texte en Python ?</a></li>
+<li><a href="#comment-identifier-les-mots-après-avoir-fait-re.split"><span class="toc-section-number">7</span> Comment identifier les mots après avoir fait re.split ?</a></li>
+<li><a href="#comment-choisit-on-le-mot-pour-corriger-dans-la-version-automatique"><span class="toc-section-number">8</span> Comment choisit-on le mot pour corriger dans la version automatique ?</a></li>
+<li><a href="#comment-faire-pour-trouver-les-mots-à-la-distance-de-n-dans-la-stratégie-2"><span class="toc-section-number">9</span> Comment faire pour trouver les mots à la distance de N dans la stratégie 2 ?</a></li>
+<li><a href="#module-dictionnaire-dictionnaire.py"><span class="toc-section-number">10</span> Module dictionnaire (dictionnaire.py)</a></li>
+<li><a href="#contenu-du-rapport"><span class="toc-section-number">11</span> Contenu du rapport</a></li>
+<li><a href="#comment-connaître-lalphabet"><span class="toc-section-number">12</span> Comment connaître l’alphabet ?</a></li>
+<li><a href="#comment-écrire-un-fichier-texte-à-partir-dune-liste-de-mots"><span class="toc-section-number">13</span> Comment écrire un fichier texte à partir d’une liste de mots ?</a></li>
+</ul>
+</nav>
+<h1 id="quest-ce-que-les-fichiers-.dic"><span class="header-section-number">1</span> Qu’est ce que les fichiers .dic</h1>
+<p>Les fichiers .dic sont des fichiers texte. On aurait pu utiliser l’extension .txt. L’idée de l’extension .dic est de bien les identifier comme un dictionnaire.</p>
+<p>La règle pour ces fichiers est qu’il n’y a qu’un seul mot par ligne.</p>
+<p>Ce fichier se lit donc comme un fichier texte classique (<code>open</code> en Python). Pour chaque ligne, on pourra utiliser la méthode <code>strip()</code> de <code>str</code> pour supprimer les blancs en début et fin de ligne.</p>
+<h1 id="lalgorithme-donné-pour-la-distance"><span class="header-section-number">2</span> L’algorithme donné pour la distance</h1>
+<h2 id="erreur-dans-lénoncé."><span class="header-section-number">2.1</span> Erreur dans l’énoncé.</h2>
+<p>La ligne</p>
+<pre><code>Si i &gt; 1 Et j &gt; 1 Et a[i] = b[j-1] Et a[i-1] = b[j] Alors</code></pre>
+<p>doit être remplacée par :</p>
+<pre class="sourceCode python" id="cb2"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" data-line-number="1">Si i <span class="op">&gt;</span> <span class="dv">1</span> Et j <span class="op">&gt;</span> <span class="dv">1</span> Et a[i<span class="dv">-1</span>] <span class="op">=</span> b[j<span class="dv">-2</span>] Et a[i<span class="dv">-2</span>] <span class="op">=</span> b[j<span class="dv">-1</span>] Alors</a></code></pre>
+<h2 id="mauvais-résultat"><span class="header-section-number">2.2</span> Mauvais résultat</h2>
+<p>La distance trouvée pour les mots ‘ma’ et ‘amx’ est 3 au lieu de 2.</p>
+<p>On pourrait en effet faire ‘ma’ -&gt; ‘am’ -&gt; ‘amx’.</p>
+<p>C’est parce que l’algorihtme donné ne traite pas ce cas où une même sous-chaîne subie plusieurs transformations. Ici, il fait deux modification sur la même sous-chaîne ‘ma’ : une transposition puis un ajout.</p>
+<p>Plus d’informations sur <a href="https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance#Algorithm">Wikipedia</a>.</p>
+<p>Nous limiterons à l’algorithme qui est donné dans le sujet.</p>
+<h1 id="est-ce-quon-peut-décider-de-ne-pas-corriger-les-mots-avec-une-seule-lettre"><span class="header-section-number">3</span> Est-ce qu’on peut décider de ne pas corriger les mots avec une seule lettre</h1>
+<p>Oui. Il faut mentionner dans le sujet les choix faits.</p>
+<h1 id="est-ce-quil-faut-traiter-les-extensions-possibles"><span class="header-section-number">4</span> Est-ce qu’il faut traiter les extensions possibles ?</h1>
+<p>Non, il ne faut pas traiter les extensions qui sont présentées en section 1.9 du sujet.</p>
+<p>Si vous avez fini le sujet (programmation, tests, rapport, support de présentation…), si vous souhaitez y passer plus de temps alors vous pouvez décider de traiter certaines des extensions proposées ou d’autres. Ces extensions ne seront pas pris en compte dans la note, ou seulement de façon marginale.</p>
+<h1 id="jai-des-problèmes-quand-je-lis-en-python-le-dictionnaire-caractères-bizarres"><span class="header-section-number">5</span> J’ai des problèmes quand je lis en Python le dictionnaire (caractères bizarres)</h1>
+<p>Les fichiers fournis sont un utf-8. Si la lecture en Python affiche des caractères bizarres, vous pouvez utiliser le paramètre optionnel <code>encoding</code> de <code>open</code> :</p>
+<pre class="sourceCode python" id="cb3"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&quot;monfichier.txt&quot;</span>, <span class="st">&quot;r&quot;</span>, encoding<span class="op">=</span><span class="st">&#39;utf-8&#39;</span>) <span class="im">as</span> fichier:</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">    ...</a></code></pre>
+<h1 id="comment-faire-pour-écrire-dans-un-fichier-texte-en-python"><span class="header-section-number">6</span> Comment faire pour écrire dans un fichier texte en Python ?</h1>
+<p>On peut utiliser <code>print</code> en fournissant le paramètre optionnel <code>file</code> :</p>
+<pre class="sourceCode python" id="cb4"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&quot;monfichier.txt&quot;</span>, <span class="st">&quot;w&quot;</span>) <span class="im">as</span> fichier:</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">    <span class="bu">print</span>(<span class="st">&quot;Ce que je veux....&quot;</span>, <span class="bu">file</span><span class="op">=</span>fichier)</a></code></pre>
+<h1 id="comment-identifier-les-mots-après-avoir-fait-re.split"><span class="header-section-number">7</span> Comment identifier les mots après avoir fait re.split ?</h1>
+<p>L’appel à <code>re.split</code> indiqué dans le sujet garantit que les mots sont toujours à indice pair. On peut donc s’appuyer sur cette propriété. Sinon, on peut tester un objet de type <code>str</code> avec la méthode <code>isalnum</code> pour vérifier que tous ses caractères sont des lettres ou des chiffres.</p>
+<pre class="sourceCode python" id="cb5"><code class="sourceCode python"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="op">&gt;&gt;&gt;</span> <span class="st">&#39;çà&#39;</span>.isalnum()</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="va">True</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="op">&gt;&gt;&gt;</span> <span class="st">&#39;, &#39;</span>.isalnum()</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="va">False</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="op">&gt;&gt;&gt;</span> <span class="st">&#39;çà1&#39;</span>.isalnum()</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="va">True</span></a></code></pre>
+<h1 id="comment-choisit-on-le-mot-pour-corriger-dans-la-version-automatique"><span class="header-section-number">8</span> Comment choisit-on le mot pour corriger dans la version automatique ?</h1>
+<p>À vous de choisir. Il faut juste que ce soit l’un des mots qui a la plus petite distance au mot à corriger.</p>
+<h1 id="comment-faire-pour-trouver-les-mots-à-la-distance-de-n-dans-la-stratégie-2"><span class="header-section-number">9</span> Comment faire pour trouver les mots à la distance de N dans la stratégie 2 ?</h1>
+<p>On peut raisonner par récurrence. Les mots à la distance 0, c’est le mot lui-même.</p>
+<p>À la distance 1, on applique toute les transformations élémentaires 1 fois au mot initial.</p>
+<p>À la distance N+1, on suppose que l’on connait les mots à la distance N. Les mots à la distance N+1 sont les mots obtenus à partir de ceux à une distance N en appliquant une transformation élémentaire.</p>
+<p>Attention : pour le calcul de la distance, on peut retomber sur un mot déjà vu à une distance inférieure.</p>
+<h1 id="module-dictionnaire-dictionnaire.py"><span class="header-section-number">10</span> Module dictionnaire (dictionnaire.py)</h1>
+<p><strong>Question :</strong> Nous avons regardé les consignes pour les projets d’infos, et nous n’arrivons pas à comprendre ce que vous voulez dire à partir de “Pour l’organisation du projet en modules, nous vous imposons un module dictionnaire.py qui représentera un dictionnaire….”</p>
+<p><strong>Réponse :</strong> Ceci signifie que vous devez avoir un module appelé dictionnaire.py et qui correspond à la notion de dictionnaire : il regroupe les fonctions liées au dictionnaire.</p>
+<p><strong>Question :</strong> Lorsque vous dites « notion de dictionnaire », cela ne concerne que l’import du dictionnaire principal ? ou bien toutes les fonctions qui y font appel ? ou encore le dictionnaire personnel ? \end{REMARQUE}</p>
+<p><strong>Réponse :</strong> C’est à vous de voir…</p>
+<p>Mais a priori, ce n’est pas que l’import… Il faut y mettre toutes les fonctions qui concernent principalement le dictionnaire.</p>
+<p>De plus n’y a t-il pas un grand nombre de fonctions communes pour le dictionnaire principal et le dictionnaire personnel ?</p>
+<h1 id="contenu-du-rapport"><span class="header-section-number">11</span> Contenu du rapport</h1>
+<p><strong>Question :</strong> Sur le sujet du projet d’informatique, il y a écrit que le rapport écrit compte 8 points dans la notation. Mais nous avons eu peu d’information sur ce rapport. Serait-il possible de savoir en quoi il consiste ? Et que doit-on mettre dedans ?</p>
+<p><strong>Réponse :</strong> Le contenu du rapport et décrit en page 6 du sujet.</p>
+<p>Le rapport compte pour 8 points sur 100.</p>
+<h1 id="comment-connaître-lalphabet"><span class="header-section-number">12</span> Comment connaître l’alphabet ?</h1>
+<p>Définir explicitement une liste avec les caractères possibles d’un mot est dangereux (risque d’en oublier) et n’est pas général (une autre langue peut avoir un alphabet différent).</p>
+<p>Une meilleur solution est de considérer que l’alphabet est défini par les mots du dictionnaire. À ne calculer qu’une seule fois, bien sûr !</p>
+<p>L’avantage supplémentaire, c’est que la stratégie 2 sera plus facile à tester si l’alphabet est petit, donc si vous avez un dictionnaire dont les mots utilisent peu de lettres.</p>
+<h1 id="comment-écrire-un-fichier-texte-à-partir-dune-liste-de-mots"><span class="header-section-number">13</span> Comment écrire un fichier texte à partir d’une liste de mots ?</h1>
+<p>Trois choses à utiliser :</p>
+<ul>
+<li><code>open</code> avec <code>'w'</code> comme deuxième paramètre pour ouvrir le fichier en écriture</li>
+<li><code>print</code> avec l’option <code>file</code> pour préciser le fichier dans lequel <code>print</code> va écrire et <code>end</code> pour éviter d’avoir des retours à la ligne non souhaités</li>
+<li><code>join</code> de <code>str</code> pour concaténer les mots d’une liste (d’un itérable) en ajoutant un séparateur entre eux</li>
+</ul>
+<p>Exemple :</p>
+<pre class="sourceCode python" id="cb6"><code class="sourceCode python"><a class="sourceLine" id="cb6-1" data-line-number="1">mots <span class="op">=</span> [<span class="st">&#39;un&#39;</span>, <span class="st">&#39; &#39;</span>, <span class="st">&#39;exemple&#39;</span>, <span class="st">&#39; !&#39;</span>, <span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>, <span class="st">&#39;sur&#39;</span>, <span class="st">&#39; &#39;</span>, <span class="st">&#39;deux&#39;</span>, <span class="st">&#39;   &#39;</span>, <span class="st">&#39;lignes&#39;</span>]</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="cf">with</span> <span class="bu">open</span> (<span class="st">&#39;resultat-tmp.txt&#39;</span>, <span class="st">&#39;w&#39;</span>) <span class="im">as</span> f:</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">    <span class="bu">print</span>(<span class="st">&#39;&#39;</span>.join(mots), <span class="bu">file</span><span class="op">=</span>f, end<span class="op">=</span><span class="st">&#39;&#39;</span>)</a></code></pre>
+</body>
+</html>

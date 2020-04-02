@@ -1,0 +1,14 @@
+Et si le même mot est mal orthographié plusieurs fois.
+Par exemple un mot long comme anticonstitutionellement
+avec une faute, une fois.
+Puis deux fois : anticonstitutionellement
+tois fois : anticonstitutionellement
+et plein d'autres fois : anticonstitutionellement
+anticonstitutionellement anticonstitutionellement anticonstitutionellement
+anticonstitutionellement anticonstitutionellement anticonstitutionellement
+anticonstitutionellement anticonstitutionellement anticonstitutionellement
+anticonstitutionellement anticonstitutionellement anticonstitutionellement
+anticonstitutionellement anticonstitutionellement anticonstitutionellement
+anticonstitutionellement anticonstitutionellement anticonstitutionellement
+anticonstitutionellement anticonstitutionellement anticonstitutionellement
+anticonstitutionellement anticonstitutionellement anticonstitutionellement

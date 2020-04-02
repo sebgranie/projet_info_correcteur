@@ -1,0 +1,19 @@
+% Correcteur orthographique
+% Contenu du dossier
+%
+
+# Les fichiers Python
+
+* icorrecteur.py : le correcteur interactif
+* acorrecteur.py : le correcteur automatique
+
+
+# Les textes et dictionnaires
+
+* frgut.dic : le dictionnaire français du projet GUTenberg
+* dico1.dic : dictionnaire réduit
+
+* exemple1.txt : l'exemple utilisé dans le sujet (avec dico1.dic ou frgut.dic)
+* exemple2.txt : au autre exemple qui pourrait vous conduire à envisager quelques optimisations
+	    (avc dico1.dic ou frgut.dic)
+
