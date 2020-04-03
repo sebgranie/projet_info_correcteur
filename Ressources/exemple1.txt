@@ -1,9 +1,9 @@
 Un correcteur ortografique de mot isolés
-ne peut détecter ni les fautes de 
-conjuguaison ni de genre ni les acords
+ne peut détecter ni les fautes de
+conjuguaison, ni de genre ni les acords
 ni la syntaxe.
 Et la poncturation ?
 Quid de l'éfficacité ?
-Pas trop de propositions faites ?
+Pas trop de , propositions faites ?
 Comment les classer ?
 Et les majuscules ?

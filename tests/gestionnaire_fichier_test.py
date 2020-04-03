@@ -1,4 +1,4 @@
-from sources.gestionnaire_fichier import TransformerFichierListe, TransformerListeFichier
+from sources.gestionnaire_fichier import TransformerFichierListe, TransformerListeFichier, TransformerFichierTexte, TransformerTexteFichier
 import pytest
 import os
 from pathlib import Path
@@ -20,4 +20,10 @@ def test_transformer_liste_fichier():
     liste = ["un", "deux", "trois"]
     TransformerListeFichier(liste, "fichier.txt")
     assert TransformerFichierListe("fichier.txt") == liste
+    os.remove("fichier.txt")
+
+def test_transformer_texte_fichier():
+    texte = [["un", "deux", "trois"],["quatre"]]
+    TransformerTexteFichier(texte, "fichier.txt")
+    assert TransformerFichierTexte("fichier.txt") == texte
     os.remove("fichier.txt")

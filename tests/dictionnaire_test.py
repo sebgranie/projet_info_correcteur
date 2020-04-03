@@ -1,4 +1,4 @@
-from sources.dictionnaire import Dictionnaire
+from sources.dictionnaire import Dictionnaire, EnsembleDictionnaire
 import pytest
 
 def test_dictionnaire_chercher_mot():
@@ -40,5 +40,49 @@ def test_constructeur():
     d = Dictionnaire(a)
     assert d.mots ==  a
 
+# Test Ensemble dictionnaire
+
+def test_dictionnaire_chercher_mot():
+    d = EnsembleDictionnaire([Dictionnaire(["oui", "non","manger"]),\
+                              Dictionnaire(["oun"])])
+    assert d.chercher_mot("oui")
+    assert d.chercher_mot("non")
+    assert d.chercher_mot("manger")
+    assert d.chercher_mot("oun")
+    assert not d.chercher_mot("ouii")
+
+
+
+
+def test_compter_nombre_mot():
+    d = EnsembleDictionnaire([Dictionnaire(["oui", "non","manger"],),\
+                              Dictionnaire(["oun"])])
+    assert d.compter_nombre_mots() == 4
+
+
+
+def test_ajouter_mot():
+    d = EnsembleDictionnaire([Dictionnaire(["oui", "non","manger"]),\
+                              Dictionnaire(["oun"])])
+    d.ajouter_mot("the")
+    assert d.compter_nombre_mots() == 6
+
+    d = EnsembleDictionnaire([Dictionnaire(["oui", "non","manger"],False),\
+                              Dictionnaire(["oun"])])
+    d.ajouter_mot("the")
+    assert d.compter_nombre_mots() == 5
+
+    d = EnsembleDictionnaire([Dictionnaire(["oui", "non","manger"],False),\
+                              Dictionnaire(["oun"],False)])
+    d.ajouter_mot("the")
+    assert d.compter_nombre_mots() == 4
+
+
+def test_constructeur():
+    d = EnsembleDictionnaire([Dictionnaire(["oui", "non","manger"]), \
+                             Dictionnaire(["bouger"]), \
+                             Dictionnaire([])])
+    assert len(d.dictionnaires) == 3
+    assert d.compter_nombre_mots() == 4
 
 

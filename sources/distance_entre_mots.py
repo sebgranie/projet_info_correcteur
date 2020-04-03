@@ -1,7 +1,11 @@
 import numpy as np
 
-
+# Cette fonction retourne la distance qu'il existe entre deux mots
+# rentrés en argument de la fonction ici appelés a et b.
 def CalculDistanceMots(a, b):
+
+    # Nous utilisons le package NumPy pour faciliter l'écriture
+    # de la matrice d.
     d = np.zeros((len(a)+1,len(b)+1))
     d[:,0] = np.arange(0,len(a)+1)
     d[0] = np.arange(0, len(b)+1)
