@@ -23,7 +23,7 @@ def test_transformer_liste_fichier():
     os.remove("fichier.txt")
 
 def test_transformer_texte_fichier():
-    texte = [["un", "deux", "trois"],["quatre"]]
+    texte = [["un", " ", "deux", " ", "trois"],["quatre"]]
     TransformerTexteFichier(texte, "fichier.txt")
     assert TransformerFichierTexte("fichier.txt") == texte
     os.remove("fichier.txt")

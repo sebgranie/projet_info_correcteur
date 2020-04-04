@@ -24,11 +24,11 @@ class CorrecteurInteractif(object):
         # mots corrigés.
         corrige = []
         correction = []
-        # print(texte)
+        print(texte)
         for liste_mot in texte:
             sous_liste = []
             for mot in liste_mot:
-                if self.dictionnaire.chercher_mot(mot): #le mot du texte se trouve dans le dictionnaire
+                if self.dictionnaire.chercher_mot(mot.lower()) or len(mot) < 2: #le mot du texte se trouve dans le dictionnaire
                     sous_liste.append(mot)
                 else:
                     pass

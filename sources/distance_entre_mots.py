@@ -28,5 +28,3 @@ def CalculDistanceMots(a, b):
     print(d)
     return d[len(a)][len(b)]
 
-if __name__ == "__main__":
-    print(CalculDistanceMots("camoinne", "camionne"))

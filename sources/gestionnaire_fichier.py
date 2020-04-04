@@ -48,10 +48,10 @@ def TransformerTexteFichier(texte ,fichier):
         for ligne in texte:
             for mot in range(len(ligne)):
                 if mot == len(ligne)-1:
-                    f.write(ligne[mot]+"\n") # écrire le mot suivi du caractère unique \n
+                    f.write(ligne[mot]) # écrire le mot suivi du caractère unique \n
                                              # pour revenir à la ligne au prochain mot
                 else:
-                    f.write(ligne[mot]+" ")  # écrire le mot dans le fichier texte
+                    f.write(ligne[mot])  # écrire le mot dans le fichier texte
                 mot = mot + 1
 
 
