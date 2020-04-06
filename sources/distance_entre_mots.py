@@ -9,11 +9,11 @@ def CalculDistanceMots(a, b):
     d = np.zeros((len(a)+1,len(b)+1))
     d[:,0] = np.arange(0,len(a)+1)
     d[0] = np.arange(0, len(b)+1)
-    print(d)
+    #print(d)
 
     cout = 0
     for i in range(1,len(a)+1):
-        print(i)
+        #print(i)
         for j in range(1,len(b)+1):
             if a[i-1] == b[j-1]:
                 cout = 0
@@ -25,6 +25,6 @@ def CalculDistanceMots(a, b):
             if i > 1 and j > 1 and a[i-1] == b[j-2] and a[i-2] == b[j-1]:
                 d[i][j] = min(d[i][j], d[i-2][j-2]+1)
 
-    print(d)
+    #print(d)
     return d[len(a)][len(b)]
 

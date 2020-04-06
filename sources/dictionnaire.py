@@ -1,3 +1,5 @@
+from distance_entre_mots import CalculDistanceMots
+
 class Dictionnaire(object):
     def __init__(self, mots, muable = True):
         if isinstance(mots, list):
@@ -35,6 +37,13 @@ class Dictionnaire(object):
     def chercher_mot(self, mot):
         return mot in self.mots                 # Retourne un booléen
 
+    def mots_possibles(self, mot_inconnu, seuil):
+        mots_possibles = []
+        for mot in self.mots:
+            if CalculDistanceMots(mot_inconnu, mot) < seuil:
+                mots_possibles.append(mot)
+        return mots_possibles
+
 
 # L'objectif de cette classe est d'encapsuler les deux dictionnaires:
 # le dictionnaire de Mr Crégut et le dictionnairre personnel.
@@ -64,6 +73,11 @@ class EnsembleDictionnaire(Dictionnaire):
         for d in self.dictionnaires:
             d.ajouter_mot(mot)
 
+    def mots_possibles(self, mot_inconnu, seuil):
+        mots_possibles = []
+        for d in self.dictionnaires:
+            mots_possibles.extend(d.mots_possibles(mot_inconnu, seuil))
+        return mots_possibles
 
 
 

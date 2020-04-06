@@ -26,16 +26,11 @@ def TransformerFichierTexte(fichier):
     texte = []
     with open(fichier, "r") as f:
         for ligne in f:
-            # n contient iterativement chaque ligne du fichier.
-            # on utilise split pour enlever le caractère
-            # (unique) '\n' à la fin de la ligne
-            mots_ligne = []
             for word in re.split(r'(\W+)',ligne):  # re.split permet de découper les mots du texte
-                                                   # tout en conservant la ponctuation
-                mots_ligne.append(word)
+                                                    # tout en conservant la ponctuation
+                texte.append(word)
 
-            texte.append(mots_ligne)
-    return texte
+    return list(filter(None, texte))  # filter permet d'enlever les caractères de taille 0 exemple ""
 
 def TransformerTexteFichier(texte ,fichier):
     '''
@@ -45,15 +40,8 @@ def TransformerTexteFichier(texte ,fichier):
     seule ligne.
     '''
     with open(fichier, "w") as f:
-        for ligne in texte:
-            for mot in range(len(ligne)):
-                if mot == len(ligne)-1:
-                    f.write(ligne[mot]) # écrire le mot suivi du caractère unique \n
-                                             # pour revenir à la ligne au prochain mot
-                else:
-                    f.write(ligne[mot])  # écrire le mot dans le fichier texte
-                mot = mot + 1
-
+        for mot in texte:
+            f.write(mot)  # écrire le mot dans le fichier texte
 
 def TransformerListeFichier(mots, fichier):
     '''
