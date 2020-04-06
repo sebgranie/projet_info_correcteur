@@ -34,14 +34,22 @@ class CorrecteurInteractif(object):
                len(mot) < 2:   #  soit de taille inférieure à 2, soit qui
                                #  se trouve dans le dictionnaire, soit qui
                                #  ne comporte pas que des lettres de l'alphabet
-                mot_trouves +=1
+                if mot.isalpha():
+                    mot_trouves +=1
                 corrige.append(mot)
             else:
                 mot_inconnu +=1
-                corrige.append(self.CorrigeMot(mot, ligne))
+                mot_corrige = self.CorrigeMot(mot, ligne)
+                corrige.append(mot_corrige)
+                correction.append([ligne, mot, mot_corrige])
 
             if "\n" in mot:
                 ligne += 1
+
+        print(f"{mot_trouves} mots trouvés dans le dictionnaire.")
+        print(f"{mot_inconnu} mots inconnus.")
+        for i in correction:
+            print(f"{i[0]}. {i[1]} --> {i[2]}")
 
         return [corrige, correction]  #Liste contenant deux sous-listes décrites précedemment.
 
@@ -58,8 +66,9 @@ class CorrecteurInteractif(object):
         else:
             # print(mots_possibles)
             # print(mot)
-            # print()
+            print()
             print(f"Le mot {mot} (ligne {ligne}) n'est dans les dictionnaires.")
+            print()
             for i in range(len(mots_possibles)):
                 print(f"{i+1}. {mots_possibles[i]} ({int(CalculDistanceMots(mot, mots_possibles[i]))})")
             print()
@@ -72,7 +81,7 @@ class CorrecteurInteractif(object):
                 choix_utilisateur = input()
 
                 if choix_utilisateur == "+":
-                    self.dictionnaire.ajouter_mot(mot)
+                    self.dictionnaire.ajouter_mot(mot.lower())
                     return mot
                 if choix_utilisateur == "":
                     return mot
@@ -89,24 +98,6 @@ class CorrecteurInteractif(object):
                         print("Votre saisie n'est pas adaptée, veuillez recommencer")
 
         return mot
-
-                # for mot_dico in self.dictionnaire:
-                #     if len(liste_mot[mot]) < 2:
-                #         pass
-                #     if texte[liste_mot][mot] in self.dictionnaire:
-                #         pass
-
-                #     liste_mot_corriges = []
-                #     if d[len(texte[liste_mot][mot])][self.dictionnaire[mot_dico]] != 0:
-                #         print("Le mot" + texte[liste_mot][mot] + " est introuvable")
-                #         print("Veuillez choisir l'une des corrections proposées ou \
-                #                voulez-vous ajouter" + texte[liste_mot][mot] + \
-                #               "au dictionnaire ?")
-                #         liste_mots_possibles =[]
-                #         if d[len(texte[liste_mot][mot])][self.dictionnaire[mot_dico]] <= self.seuil:
-                #             liste_mots_possibles.append(self.dictionnaire[mot_dico])
-                #         print("")
-
 
 
 
