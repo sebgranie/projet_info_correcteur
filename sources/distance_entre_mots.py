@@ -26,5 +26,5 @@ def CalculDistanceMots(a, b):
                 d[i][j] = min(d[i][j], d[i-2][j-2]+1)
 
     #print(d)
-    return d[len(a)][len(b)]
+    return int(d[len(a)][len(b)])
 

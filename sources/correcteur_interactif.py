@@ -2,56 +2,12 @@ import argparse
 from dictionnaire import Dictionnaire, EnsembleDictionnaire
 from distance_entre_mots import CalculDistanceMots
 from gestionnaire_fichier import TransformerFichierListe, TransformerFichierTexte, TransformerListeFichier, TransformerTexteFichier
+from acorrecteur import CorrecteurAutomatique
 
-class CorrecteurInteractif(object):
-    def __init__(self, seuil, dictionnaire): # définition du constructeur
-        self.seuil = seuil
+class CorrecteurInteractif(CorrecteurAutomatique):
+    def __init__(self, seuil, dictionnaire): # définition du constructeur , les attributs de la classe sont toujours précédes de self.
+        self.seuil = seuil                   # initialisation des attributs
         self.dictionnaire = dictionnaire
-
-    def CorrigeTexte(self, texte):
-        '''
-        Corrige un texte passe en argument et
-        retourne le corrige et un resume des corrections.
-        '''
-        # corrige est une grande liste dans laquelle seront
-        # encapsulées toutes les sous-listes de mots du texte
-        # contenant uniquement des mots justes. Comme expliqué
-        # precedemment, chaque sous-liste correspond à une
-        # ligne du texte.
-
-        # correction est une liste qui résume l'inventaire des
-        # mots corrigés.
-        corrige = []
-        correction = []
-        mot_trouves = 0
-        mot_inconnu = 0
-        ligne = 1
-        print(texte)
-        print(f"Seuil : {self.seuil}")
-        for mot in texte:
-            if not mot.isalpha() or \
-               self.dictionnaire.chercher_mot(mot.lower()) or \
-               len(mot) < 2:   #  soit de taille inférieure à 2, soit qui
-                               #  se trouve dans le dictionnaire, soit qui
-                               #  ne comporte pas que des lettres de l'alphabet
-                if mot.isalpha():
-                    mot_trouves +=1
-                corrige.append(mot)
-            else:
-                mot_inconnu +=1
-                mot_corrige = self.CorrigeMot(mot, ligne)
-                corrige.append(mot_corrige)
-                correction.append([ligne, mot, mot_corrige])
-
-            if "\n" in mot:
-                ligne += 1
-
-        print(f"{mot_trouves} mots trouvés dans le dictionnaire.")
-        print(f"{mot_inconnu} mots inconnus.")
-        for i in correction:
-            print(f"{i[0]}. {i[1]} --> {i[2]}")
-
-        return [corrige, correction]  #Liste contenant deux sous-listes décrites précedemment.
 
     def CorrigeMot(self, mot, ligne):
         '''
@@ -60,33 +16,35 @@ class CorrecteurInteractif(object):
         inférieure au seuil rentré par l'utilisateur. Elle renvoit le mot
         une fois corrigé.
         '''
-        mots_possibles = self.dictionnaire.mots_possibles(mot,self.seuil)
-        if len(mots_possibles) == 0:
+        mots_possibles = self.dictionnaire.mots_possibles(mot,self.seuil)  # Variable locale qui est la liste des mots dont la distance entre
+                                                                           # chacun de ses mots et le mot inconnu est inférieure au seuil.
+        if len(mots_possibles) == 0:  # Condition si aucun mot n'a été trouvé pour un certain mot inconnu du texte
             print(f"Aucun mots n'ont été trouvé dans les dictionnaires pour le mot érroné {mot}")
         else:
-            # print(mots_possibles)
-            # print(mot)
-            print()
-            print(f"Le mot {mot} (ligne {ligne}) n'est dans les dictionnaires.")
-            print()
-            for i in range(len(mots_possibles)):
-                print(f"{i+1}. {mots_possibles[i]} ({int(CalculDistanceMots(mot, mots_possibles[i]))})")
-            print()
-            print("Si vous souhaitez choisir une des propositions de corrections suivantes, veuillez saisir son numéro : ")
+
+            print(f"\nLe mot {mot} (ligne {ligne}) n'est pas dans les dictionnaires.\n")
+
+            for i in range(len(mots_possibles)):  # i varie entre 0 jusqu'au nombre de mots trouvés dans le dictionnaire possible - 1
+                # Il est important d'ajuster l'indice i car range débute à 0 et un texte commence à la
+                # première ligne et l'indice 0 d'une liste et le premier élément de la liste.
+                print(f"{i+1}. {mots_possibles[i]} ({CalculDistanceMots(mot, mots_possibles[i])})")
+
+            print("\nSi vous souhaitez choisir une des propositions de corrections suivantes, veuillez saisir son numéro : ")
             print("Sinon, veuillez saisir + pour ajouter ce mot inconnu à votre dictionnaire personnel :")
             print("Si vous souhaitez garder ce mot sans l'ajouter à votre dictionnaire personnel, pressez entrer :")
             print("Notre dernière proposition est que vous corrigiez vous-même directement le mot, dans ce cas veuillez l'écrire à nouveau :")
 
-            while True:
-                choix_utilisateur = input()
+            while True:  # Condition toujours vérifiée pour être sûr que l'utilisateur puisse effectuer un choix
+                         # Il est important de vérifier que toutes les branches du while se termine par un return pour ne pas être bloqué.
+                choix_utilisateur = input()  # Variable locale possèdant le choix de l'utilisateur
 
                 if choix_utilisateur == "+":
-                    self.dictionnaire.ajouter_mot(mot.lower())
+                    self.dictionnaire.ajouter_mot(mot.lower()) # Ajout du mot inconnu au dictionnaire personnel
+                    return mot  # Le mot inconnu est recopié à l'identique dans la liste corrige
+                if choix_utilisateur == "": # Conservation du mot sans ajout au dictionnaire perso
                     return mot
-                if choix_utilisateur == "":
-                    return mot
-                if choix_utilisateur.isalpha():
-                    return choix_utilisateur
+                if choix_utilisateur.isalpha():  # L'utilisateur décide de réecrire le mot lui-même
+                    return choix_utilisateur     # Le mot corrige par l'utilisateur remplace alors le mot inconnu
                 else:
                     try:
                         reponse_utilisateur_integer = int(choix_utilisateur)
@@ -105,7 +63,7 @@ class CorrecteurInteractif(object):
 if __name__ == "__main__":
 
 # ArgumentParser permet d'améliorer la compréhension du programme
-# vis à vis de l'utilisateur , en particulier quelle(s) variable(s) sont
+# vis à vis de l'utilisateur, en particulier quelle(s) variable(s) sont
 # demandés en paramètres de la fonction.
     parser = argparse.ArgumentParser(description="Correction interactif d'un texte ")
     parser.add_argument('text_original', action="store", type=str)
@@ -116,32 +74,24 @@ if __name__ == "__main__":
     parser.add_argument('dic_perso', action="store", type=str)
     arguments = parser.parse_args()
 
-    # L'objet argument permet d'obtenir les arguments du programme
-    print(arguments.text_original)
-    print(arguments.text_corrige)
-    print(arguments.text_correction)
-    print(arguments.seuil)
-    print(arguments.dic_text)
-    print(arguments.dic_perso)
-
-    # dictionnaire fourni immuable
+    # Construction de l'objet dictionnaire fourni immuable
     dictionnaire_fixe = Dictionnaire(TransformerFichierListe(arguments.dic_text), \
                                      False)
-    # dictionnaire perso muable
+    # Construction de l'objet dictionnaire perso muable
     dictionnaire_personnel = Dictionnaire(TransformerFichierListe(arguments.dic_perso), \
                                            True)
     # L'ensemble de dictionnaire permet d'encapsuler le contenu des 2 dictionnaires à
     # travers une interface unique
     ensemble_dictionnaire = EnsembleDictionnaire([dictionnaire_fixe, dictionnaire_personnel])
 
-    # Instanciation de la classe CorrecteurInteratif
+    # ( Instanciation de la classe CorrecteurInteratif )
     correcteur_interactif = CorrecteurInteractif(arguments.seuil, ensemble_dictionnaire)
 
     corrige, correction = correcteur_interactif.CorrigeTexte(TransformerFichierTexte(arguments.text_original))
 
-    # L'objectif est de reformer le texte initialement à corriger par
-    # le texte composé uniquement de mots justes. Cette fonction utilise
-    # pour cela la liste corrigée composée de tous les mots du texte.
-    TransformerTexteFichier(corrige ,arguments.text_corrige)
+
+    TransformerTexteFichier(corrige,arguments.text_corrige)
+
+    TransformerTexteFichier(correction, arguments.text_correction)
 
     TransformerListeFichier(dictionnaire_personnel.mots, arguments.dic_perso)
