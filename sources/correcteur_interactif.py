@@ -1,6 +1,5 @@
 import argparse
 from dictionnaire import Dictionnaire, EnsembleDictionnaire
-from distance_entre_mots import CalculDistanceMots
 from gestionnaire_fichier import TransformerFichierListe, TransformerFichierTexte, TransformerListeFichier, TransformerTexteFichier
 from acorrecteur import CorrecteurAutomatique
 
@@ -16,9 +15,9 @@ class CorrecteurInteractif(CorrecteurAutomatique):
         inférieure au seuil rentré par l'utilisateur. Elle renvoit le mot
         une fois corrigé.
         '''
-        mots_possibles = self.dictionnaire.mots_possibles(mot,self.seuil)  # Variable locale qui est la liste des mots dont la distance entre
+        mots_possibles = self.dictionnaire.mots_possibles(mot.lower(),self.seuil)  # Variable locale qui est la liste des mots dont la distance entre
                                                                            # chacun de ses mots et le mot inconnu est inférieure au seuil.
-        if len(mots_possibles) == 0:  # Condition si aucun mot n'a été trouvé pour un certain mot inconnu du texte
+        if not mots_possibles:  # Condition si aucun mot n'a été trouvé pour un certain mot inconnu du texte
             print(f"Aucun mots n'ont été trouvé dans les dictionnaires pour le mot érroné {mot}")
         else:
 
@@ -27,7 +26,7 @@ class CorrecteurInteractif(CorrecteurAutomatique):
             for i in range(len(mots_possibles)):  # i varie entre 0 jusqu'au nombre de mots trouvés dans le dictionnaire possible - 1
                 # Il est important d'ajuster l'indice i car range débute à 0 et un texte commence à la
                 # première ligne et l'indice 0 d'une liste et le premier élément de la liste.
-                print(f"{i+1}. {mots_possibles[i]} ({CalculDistanceMots(mot, mots_possibles[i])})")
+                print(f"{i+1}. {mots_possibles[i][1]} ({mots_possibles[i][0]})")
 
             print("\nSi vous souhaitez choisir une des propositions de corrections suivantes, veuillez saisir son numéro : ")
             print("Sinon, veuillez saisir + pour ajouter ce mot inconnu à votre dictionnaire personnel :")
@@ -51,13 +50,11 @@ class CorrecteurInteractif(CorrecteurAutomatique):
                         if reponse_utilisateur_integer < 1 or reponse_utilisateur_integer > len(mots_possibles):
                             print("Veuillez recommencer votre demande avec un chiffre approprié.")
                         else:
-                            return mots_possibles[reponse_utilisateur_integer - 1]
+                            return mots_possibles[reponse_utilisateur_integer - 1][1]
                     except ValueError:
                         print("Votre saisie n'est pas adaptée, veuillez recommencer")
 
         return mot
-
-
 
 
 if __name__ == "__main__":
@@ -72,6 +69,8 @@ if __name__ == "__main__":
     parser.add_argument('seuil', action="store", type=int)
     parser.add_argument('dic_text', action="store", type=str)
     parser.add_argument('dic_perso', action="store", type=str)
+    parser.add_argument('--strategie', action="store", default=2, type=int, help="1 = comparer chacun des mots avec ceux dans les dictionnaires.    \
+                                                                       2 = produit les mots qui, suite à une opérations élémentaire sont dans les dictionnaires.")
     arguments = parser.parse_args()
 
     # Construction de l'objet dictionnaire fourni immuable
@@ -82,7 +81,7 @@ if __name__ == "__main__":
                                            True)
     # L'ensemble de dictionnaire permet d'encapsuler le contenu des 2 dictionnaires à
     # travers une interface unique
-    ensemble_dictionnaire = EnsembleDictionnaire([dictionnaire_fixe, dictionnaire_personnel])
+    ensemble_dictionnaire = EnsembleDictionnaire([dictionnaire_fixe, dictionnaire_personnel], arguments.strategie)
 
     # ( Instanciation de la classe CorrecteurInteratif )
     correcteur_interactif = CorrecteurInteractif(arguments.seuil, ensemble_dictionnaire)

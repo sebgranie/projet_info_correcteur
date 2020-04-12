@@ -8,3 +8,5 @@ def test_CalculDistanceMots():
     assert CalculDistanceMots("", "avec") == 4
     assert CalculDistanceMots("aevc", "avec") == 1
     assert CalculDistanceMots("aec", "avec") == 1
+    assert CalculDistanceMots("quid", "qui") == 1
+    assert CalculDistanceMots("Quid", "qui") == 1

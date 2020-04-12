@@ -1,4 +1,6 @@
+import string
 from distance_entre_mots import CalculDistanceMots
+
 
 class Dictionnaire(object):
     def __init__(self, mots, muable = True):
@@ -40,9 +42,12 @@ class Dictionnaire(object):
     def mots_possibles(self, mot_inconnu, seuil):
         mots_possibles = []
         for mot in self.mots:
-            if CalculDistanceMots(mot_inconnu, mot) < seuil:
-                mots_possibles.append(mot)
+            distance = CalculDistanceMots(mot_inconnu, mot)
+            if distance < seuil:
+                mots_possibles.append([distance,mot])
         return mots_possibles
+
+
 
 
 # L'objectif de cette classe est d'encapsuler les deux dictionnaires:
@@ -51,7 +56,8 @@ class Dictionnaire(object):
 # programme principal. Nous y retrouvons les mêmes noms de méthodes
 # que dans la classe dictionnaire ci-dessus.
 class EnsembleDictionnaire(Dictionnaire):
-    def __init__(self, dictionnaires):
+    def __init__(self, dictionnaires, strategie):
+        self.strategie = strategie
         if isinstance(dictionnaires, list):
             self.dictionnaires = dictionnaires
         else:
@@ -73,14 +79,49 @@ class EnsembleDictionnaire(Dictionnaire):
         for d in self.dictionnaires:
             d.ajouter_mot(mot)
 
+
     def mots_possibles(self, mot_inconnu, seuil):
         mots_possibles = []
-        for d in self.dictionnaires:
-            mots_possibles.extend(d.mots_possibles(mot_inconnu, seuil))
-        return mots_possibles
+        if self.strategie == 1:
+            for d in self.dictionnaires:
+                mots_possibles.extend(d.mots_possibles(mot_inconnu, seuil))
+            return mots_possibles
+        else:
+            liste_ajout = []
+            alphabet = list(string.ascii_lowercase)
+            '''
+            Ajout
+            '''
+            for indice in range(len(mot_inconnu)):
+                for lettre in alphabet:
+                   liste_ajout.append(mot_inconnu[:indice] + lettre + mot_inconnu[indice:])
+            '''
+            Suppression
+            '''
+            for indice in range(len(mot_inconnu)):
+                mot_suppression = mot_inconnu[:indice] + mot_inconnu[(indice+1):]
+                liste_ajout.append(mot_suppression)
+            '''
+            Transposition
 
+            Nous itérons jusqu'à len(mot_inconnu)-1 pour ne pas
+            interchanger la dernière lettre du mot avec un caractère
+            vide ce qui donne en sortie le mot à l'identique.
+            '''
+            for indice in range(len(mot_inconnu)-1):
+                liste_ajout.append(mot_inconnu[:indice] + mot_inconnu[indice+1:indice+2] + \
+                                    mot_inconnu[indice:indice+1] + mot_inconnu[indice+2:])
+            '''
+            Substitution
+            '''
+            for indice in range(len(mot_inconnu)):
+                for lettre in alphabet:
+                    liste_ajout.append(mot_inconnu[:indice] + lettre + mot_inconnu[indice+1:])
 
-
-
+            for d in self.dictionnaires:
+                for i in range(len(liste_ajout)):
+                    if d.chercher_mot(liste_ajout[i]):
+                        mots_possibles.append([1,liste_ajout[i]])
+            return mots_possibles
 
 

@@ -39,6 +39,7 @@ class CorrecteurAutomatique(object):
                     mot_trouves +=1  # incrémentation du compteur du nombre de mots connus trouvé dans le texte
                 corrige.append(mot)  # Ajout par conséquent de ce mot à la liste corrige
             else:
+                #self.seuil = int(len(mot)/2)
                 mot_inconnu +=1  # Ici sont comptés tous les mots qui vont subir une correction
                 mot_corrige = self.CorrigeMot(mot, ligne)  # Déclaration de la variable locale pour permettre
                                                            # de la réutilliser plusieurs fois par la suite
@@ -56,7 +57,10 @@ class CorrecteurAutomatique(object):
         correction.append(f"{mot_trouves} mots trouvés dans le dictionnaire.\n")
         correction.append(f"{mot_inconnu} mots inconnus.\n")
         for i in sous_liste:   # Itération parmi les sous-liste de la liste correction
-            correction.append(f"{i[0]}. {i[1]} --> {i[2]}\n")  # Message communiqué à l'utilisateur renseignant sur la ligne,
+            if i[2] == i[1]:
+                correction.append(f"{i[0]}. {i[1]} \n")
+            else:
+                correction.append(f"{i[0]}. {i[1]} --> {i[2]}\n")  # Message communiqué à l'utilisateur renseignant sur la ligne,
                                                  # le mot inconnu et sa transformation finale dans la liste de mots corrigés.
 
         return [corrige, correction]  #Liste contenant deux sous-listes décrites précedemment.
@@ -70,18 +74,17 @@ class CorrecteurAutomatique(object):
         inférieure au seuil rentré par l'utilisateur. Elle renvoit le mot
         une fois corrigé.
         '''
-        mots_possibles = self.dictionnaire.mots_possibles(mot,self.seuil)  # Variable locale qui est la liste des mots dont la distance entre
+        mots_possibles = self.dictionnaire.mots_possibles(mot.lower(),self.seuil)  # Variable locale qui est la liste des mots dont la distance entre
                                                                            # chacun de ses mots et le mot inconnu est inférieure au seuil.
-        u = self.seuil
-        mots_possibles_egale_distance = []
-        for i in range(len(mots_possibles)):  # i varie entre 0 jusqu'au nombre de mots trouvés dans le dictionnaire possible - 1
-            while CalculDistanceMots(mot, mots_possibles[i]) < u:
-                u = CalculDistanceMots(mot, mots_possibles[i])
-            if u == CalculDistanceMots(mot, mots_possibles[i]):
-                mots_possibles_egale_distance.append(mots_possibles[i])
-                return random.choice(mots_possibles_egale_distance)
-
-
+        mots_possibles_ordonnes = sorted(mots_possibles)
+        mots_meme_distance = []
+        if mots_possibles:
+            for mot in mots_possibles:
+                if mots_possibles[0][0] == mot[0]:
+                    mots_meme_distance.append(mot[1])
+            return random.choice(mots_meme_distance)
+        else:
+            return mot
 
 
 if __name__ == '__main__':
@@ -96,6 +99,9 @@ if __name__ == '__main__':
     parser.add_argument('seuil', action="store", type=int)
     parser.add_argument('dic_text', action="store", type=str)
     parser.add_argument('dic_perso', action="store", type=str)
+    parser.add_argument('--strategie', action="store", default=2, type=int, help="1 = comparer chacun des mots avec ceux dans les dictionnaires.    \
+                                                                       2 = produit les mots qui, suite à une opérations élémentaire sont dans les dictionnaires.")
+
     arguments = parser.parse_args()
 
     # Construction de l'objet dictionnaire fourni immuable
@@ -106,7 +112,7 @@ if __name__ == '__main__':
                                            True)
     # L'ensemble de dictionnaire permet d'encapsuler le contenu des 2 dictionnaires à
     # travers une interface unique
-    ensemble_dictionnaire = EnsembleDictionnaire([dictionnaire_fixe, dictionnaire_personnel])
+    ensemble_dictionnaire = EnsembleDictionnaire([dictionnaire_fixe, dictionnaire_personnel], arguments.strategie)
 
     # ( Instanciation de la classe CorrecteurAutomatique )
 
