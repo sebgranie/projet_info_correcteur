@@ -1,4 +1,5 @@
 import argparse
+import time
 import random
 from dictionnaire import Dictionnaire, EnsembleDictionnaire
 from distance_entre_mots import CalculDistanceMots
@@ -6,9 +7,13 @@ from gestionnaire_fichier import TransformerFichierListe, TransformerFichierText
 
 
 class CorrecteurAutomatique(object):
-    def __init__(self, seuil, dictionnaire): # définition du constructeur , les attributs de la classe sont toujours précédes de self.
+    def __init__(self, seuil, dictionnaire, performance = False): # définition du constructeur , les attributs de la classe sont toujours précédes de self.
         self.seuil = seuil                   # initialisation des attributs
         self.dictionnaire = dictionnaire
+        self.performance = performance
+        if self.performance:
+            self.donnees_performance = [["seuil", "taille_dictionnaire", \
+                                        "longueur_mot", "temps_execution"]]
 
     def CorrigeTexte(self, texte):
         '''
@@ -74,8 +79,16 @@ class CorrecteurAutomatique(object):
         inférieure au seuil rentré par l'utilisateur. Elle renvoit le mot
         une fois corrigé.
         '''
+        debut = time.time()
         mots_possibles = self.dictionnaire.mots_possibles(mot.lower(),self.seuil)  # Variable locale qui est la liste des mots dont la distance entre
-                                                                           # chacun de ses mots et le mot inconnu est inférieure au seuil.
+        temps_execution = time.time() - debut
+                                                                                           # chacun de ses mots et le mot inconnu est inférieure au seuil.
+
+        if self.performance:
+            self.donnees_performance.append([self.seuil, self.dictionnaire.compter_nombre_mots(),\
+                                             len(mot), temps_execution])
+            print(self.donnees_performance)
+
         mots_possibles_ordonnes = sorted(mots_possibles)
         mots_meme_distance = []
         if mots_possibles:
@@ -101,6 +114,7 @@ if __name__ == '__main__':
     parser.add_argument('dic_perso', action="store", type=str)
     parser.add_argument('--strategie', action="store", default=2, type=int, help="1 = comparer chacun des mots avec ceux dans les dictionnaires.    \
                                                                        2 = produit les mots qui, suite à une opérations élémentaire sont dans les dictionnaires.")
+    parser.add_argument('--performance', action='store', type=str)
 
     arguments = parser.parse_args()
 

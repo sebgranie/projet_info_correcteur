@@ -87,41 +87,52 @@ class EnsembleDictionnaire(Dictionnaire):
                 mots_possibles.extend(d.mots_possibles(mot_inconnu, seuil))
             return mots_possibles
         else:
-            liste_ajout = []
-            alphabet = list(string.ascii_lowercase)
-            '''
-            Ajout
-            '''
-            for indice in range(len(mot_inconnu)):
-                for lettre in alphabet:
-                   liste_ajout.append(mot_inconnu[:indice] + lettre + mot_inconnu[indice:])
-            '''
-            Suppression
-            '''
-            for indice in range(len(mot_inconnu)):
-                mot_suppression = mot_inconnu[:indice] + mot_inconnu[(indice+1):]
-                liste_ajout.append(mot_suppression)
-            '''
-            Transposition
+            liste_ajout = self.production_mots(mot_inconnu)
 
-            Nous itérons jusqu'à len(mot_inconnu)-1 pour ne pas
-            interchanger la dernière lettre du mot avec un caractère
-            vide ce qui donne en sortie le mot à l'identique.
-            '''
-            for indice in range(len(mot_inconnu)-1):
-                liste_ajout.append(mot_inconnu[:indice] + mot_inconnu[indice+1:indice+2] + \
-                                    mot_inconnu[indice:indice+1] + mot_inconnu[indice+2:])
-            '''
-            Substitution
-            '''
-            for indice in range(len(mot_inconnu)):
-                for lettre in alphabet:
-                    liste_ajout.append(mot_inconnu[:indice] + lettre + mot_inconnu[indice+1:])
+            for i in range(seuil):
+                for mot in liste_ajout:
+                    liste_ajout.extend(self.production_mots(mot))
 
             for d in self.dictionnaires:
                 for i in range(len(liste_ajout)):
                     if d.chercher_mot(liste_ajout[i]):
                         mots_possibles.append([1,liste_ajout[i]])
-            return mots_possibles
+
+    def production_mots(self,mot_inconnu):
+        liste_ajout = []
+        alphabet = list(string.ascii_lowercase)
+        '''
+        Ajout
+        '''
+        for indice in range(len(mot_inconnu)):
+            for lettre in alphabet:
+                liste_ajout.append(mot_inconnu[:indice] + lettre + mot_inconnu[indice:])
+        '''
+        Suppression
+        '''
+        for indice in range(len(mot_inconnu)):
+            mot_suppression = mot_inconnu[:indice] + mot_inconnu[(indice+1):]
+            liste_ajout.append(mot_suppression)
+        '''
+        Transposition
+
+        Nous itérons jusqu'à len(mot_inconnu)-1 pour ne pas
+        interchanger la dernière lettre du mot avec un caractère
+        vide ce qui donne en sortie le mot à l'identique.
+        '''
+        for indice in range(len(mot_inconnu)-1):
+            liste_ajout.append(mot_inconnu[:indice] + mot_inconnu[indice+1:indice+2] + \
+                                mot_inconnu[indice:indice+1] + mot_inconnu[indice+2:])
+        '''
+        Substitution
+        '''
+        for indice in range(len(mot_inconnu)):
+            for lettre in alphabet:
+                liste_ajout.append(mot_inconnu[:indice] + lettre + mot_inconnu[indice+1:])
+
+        return liste_ajout
+
+
+
 
 
