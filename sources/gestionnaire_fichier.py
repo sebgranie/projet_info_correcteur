@@ -9,7 +9,7 @@ def TransformerFichierListe(fichier):
     est utilisée pour l'utilisation des dictionnaires.
     '''
     liste = []
-    with open(fichier, "r") as f:
+    with open(fichier, "r", encoding = 'utf-8') as f:
         for n in f:
             # n contient iterativement chaque ligne du fichier.
             # on utilise split pour enlever le caractère
@@ -27,7 +27,7 @@ def TransformerFichierTexte(fichier):
     où chaque fin de liste correspond à un saut de ligne.
     '''
     texte = []
-    with open(fichier, "r") as f:
+    with open(fichier, "r", encoding = 'utf-8') as f:
         for ligne in f:
             for word in re.split(r'(\W+)',ligne):  # re.split permet de découper les mots du texte
                                                     # tout en conservant la ponctuation
@@ -42,7 +42,7 @@ def TransformerTexteFichier(texte ,fichier):
     On rappelle que chaque sous-liste contient les mots d'une
     seule ligne.
     '''
-    with open(fichier, "w") as f:
+    with open(fichier, "w", encoding = 'utf-8') as f:
         for mot in texte:
             f.write(mot)  # écrire le mot dans le fichier texte
 
@@ -53,7 +53,7 @@ def TransformerListeFichier(mots, fichier):
     par ligne. Cette fonction est utilisée pour l'utilisation
     des dictionnaires.
     '''
-    with open(fichier, "w") as f:
+    with open(fichier, "w", encoding = 'utf-8') as f:
         for n in mots:
             f.write(n+"\n")
 
@@ -63,7 +63,7 @@ def TransformerListeCsv(liste, fichier):
     L'objectif est de transformer toutes les sous-listes qui composent la liste
     en entrée sous forme de tableau.
     '''
-    with open(fichier, 'a+') as csvfile:
+    with open(fichier, 'a+', encoding = 'utf-8') as csvfile:
         csvwriter = csv.writer(csvfile)
         for n in liste:
             csvwriter.writerow(n)
