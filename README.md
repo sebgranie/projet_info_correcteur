@@ -41,7 +41,7 @@ Voici le diagramme de classe representant l'architecture de notre code. Les '_I_
 
 Executer les commandes suivantes dans le terminal au niveau du dossier `projet_info_correcteur` où se trouvent tous les fichiers requis par le programme:
 Nous accèderons aux fichiers sources et ressources grâce à des chemins relatifs comme montré ci-dessous.
-Nous utiliserons le texte `resources/exemple1.txt` comme exemple de texte à corriger.
+Nous utiliserons le texte `ressources/exemple1.txt` comme exemple de texte à corriger.
 
 #### 1.4.1 Correcteur Interactif:
 
