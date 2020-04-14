@@ -2,7 +2,6 @@ import argparse
 import time
 import random
 from dictionnaire import Dictionnaire, EnsembleDictionnaire
-from distance_entre_mots import CalculDistanceMots
 from gestionnaire_fichier import TransformerFichierListe, TransformerFichierTexte, TransformerListeFichier, TransformerTexteFichier
 
 
@@ -81,8 +80,8 @@ class CorrecteurAutomatique(object):
         '''
         debut = time.time()
         mots_possibles = self.dictionnaire.mots_possibles(mot.lower(),self.seuil)  # Variable locale qui est la liste des mots dont la distance entre
+                                                                                   # chacun de ses mots et le mot inconnu est inférieure au seuil.
         temps_execution = time.time() - debut
-                                                                                           # chacun de ses mots et le mot inconnu est inférieure au seuil.
 
         if self.performance:
             self.donnees_performance.append([self.seuil, self.dictionnaire.compter_nombre_mots(),\
@@ -91,9 +90,9 @@ class CorrecteurAutomatique(object):
 
         mots_possibles_ordonnes = sorted(mots_possibles)
         mots_meme_distance = []
-        if mots_possibles:
-            for mot in mots_possibles:
-                if mots_possibles[0][0] == mot[0]:
+        if mots_possibles_ordonnes:
+            for mot in mots_possibles_ordonnes:
+                if mots_possibles_ordonnes[0][0] == mot[0]:
                     mots_meme_distance.append(mot[1])
             return random.choice(mots_meme_distance)
         else:

@@ -3,94 +3,57 @@
 ```puml
 @startuml
 
-class Dictionnaires {
-
+class EnsembleDictionnaire {
+  + __init__(list: dictionnaires, int: strategie)
+  + production_mots(str: mot_inconnu)
+  + dictionnaires : list
+  + strategie : int
 }
 
-Dictionnaires *-- "2" Dictionnaire
-Dictionnaire ^-- Dictionnaires
+EnsembleDictionnaire o-- "2" Dictionnaire
+Dictionnaire ^-- EnsembleDictionnaire
 
 class Dictionnaire {
-  + Dictionnaire(list: mots)
-  + RechercherMot(string: mot) : bool
-  + CompterNombreMots() : int
-  + AjouterMot(string: mot)
+  + __init__(list: mots, bool: muable)
+  + chercher_mot(str: mot) : bool
+  + compter_nombre_mots() : int
+  + ajouter_mot(str: mot)
+  + mots_possibles(str: mot_inconnu, int: seuil)
   + mots : list
+  + muable : bool
 }
 
-interface gestionnaire_fichiers_py {
-  + TransformerFichierListe(string: fichier) : list
-  + TransformerListeFichier(list: mots, string: fichier)
+interface gestionnaire_fichier_py {
+  + TransformerFichierListe(str: fichier) : list
+  + TransformerListeFichier(list: mots, str: fichier)
+  + TransformerFichierTexte(str: fichier)
+  + TransformerTexteFichier(list: texte, str: fichier)
+  + TransformerListeCsv(str: liste, str: fichier)
 }
 
 interface distance_entre_mots_py {
-  + CalculDistanceMots(string: mot1, string: mot2) : int
+  + CalculDistanceMots(str: mot1, str: mot2) : int
+}
+
+class CorrecteurAutomatique {
+  + __init__(int: seuil, EnsembleDictionnaire: dictionnaire)
+  + CorrigeTexte(list: texte) : str, str
+  + CorrigeMot(str: mot, int: ligne) : str
+  + seuil : int
+  + dictionnaire : EnsembleDictionnaire
 }
 
 class CorrecteurInteractif {
-  + CorrecteurInteractif(string: fichier_text_origi nal, string: fichier_text_corrige, string: fichier_correction, int: seuil, Dictionnaires: dictionnaires)
-  + CorrigeTexte()
-  + list : texte
+  + __init__(int: seuil, EnsembleDictionnaire: dictionnaire)
+  + CorrigeMot(str: mot, int: ligne) : str
 }
 
-CorrecteurInteractif --> gestionnaire_fichiers_py
-CorrecteurInteractif --> distance_entre_mots_py
-CorrecteurInteractif o-- Dictionnaires
-
-class CorrecteurAutomatique {
-  + CorrecteurAutomatique(string: fichier_text_original, string: fichier_text_corrige, int: seuil, Dictionnaires: dictionnaires)
-
-}
-
-CorrecteurAutomatique --> gestionnaire_fichiers_py
-CorrecteurAutomatique --> distance_entre_mots_py
-CorrecteurAutomatique o-- Dictionnaires
-
-CorrecteurInteractif ^-- CorrecteurAutomatique
-
-@enduml
-```
-
-
-Liste de mots en python
-
-```py
-
-
-
-dic1 = Dictionnaire(["arbre", "Animal", "vélo"])
-dic2 = Dictionnaire(["voiture"])
-
-dic2.AjouterMot("stylo")
-
-```
-
-Liste de mots dans un fichier dictionnaire
-
-`perso.dic`:
-```txt
-arbre
-Animal
-vélo
-```
-
-@startuml{title.png}
-
-class Animal {
-}
-
-class Elephant {
-}
-
-Animal ^-- Elephant
-
-class Voiture {
-}
-
-class Roue {
-}
-
-Voiture *-- "4" Roue
+CorrecteurInteractif --> gestionnaire_fichier_py
+CorrecteurInteractif o-- EnsembleDictionnaire
+CorrecteurAutomatique --> gestionnaire_fichier_py
+Dictionnaire --> distance_entre_mots_py
+CorrecteurAutomatique o-- EnsembleDictionnaire
+CorrecteurAutomatique ^-- CorrecteurInteractif
 
 @enduml
 ```

@@ -1,5 +1,5 @@
 import string
-from distance_entre_mots import CalculDistanceMots
+from sources.distance_entre_mots import CalculDistanceMots
 
 
 class Dictionnaire(object):
@@ -37,7 +37,7 @@ class Dictionnaire(object):
     # un booléen: True le mot est dans le dictionnaire,
     # (respectivement False le mot ne s'y trouve pas).
     def chercher_mot(self, mot):
-        return mot in self.mots                 # Retourne un booléen
+        return mot in self.mots   # Retourne un booléen
 
     def mots_possibles(self, mot_inconnu, seuil):
         mots_possibles = []
@@ -48,15 +48,15 @@ class Dictionnaire(object):
         return mots_possibles
 
 
-
-
-# L'objectif de cette classe est d'encapsuler les deux dictionnaires:
-# le dictionnaire de Mr Crégut et le dictionnairre personnel.
-# L'objectif est de pouvoir centraliser les actions demandés dans le
-# programme principal. Nous y retrouvons les mêmes noms de méthodes
-# que dans la classe dictionnaire ci-dessus.
 class EnsembleDictionnaire(Dictionnaire):
-    def __init__(self, dictionnaires, strategie):
+    '''
+    L'objectif de cette classe est d'encapsuler les deux dictionnaires:
+    le dictionnaire de Mr Crégut et le dictionnairre personnel.
+    L'objectif est de pouvoir centraliser les actions demandés dans le
+    programme principal. Nous y retrouvons les mêmes noms de méthodes
+    que dans la classe dictionnaire ci-dessus.
+    '''
+    def __init__(self, dictionnaires, strategie = 1):
         self.strategie = strategie
         if isinstance(dictionnaires, list):
             self.dictionnaires = dictionnaires
@@ -98,7 +98,7 @@ class EnsembleDictionnaire(Dictionnaire):
                     if d.chercher_mot(liste_ajout[i]):
                         mots_possibles.append([1,liste_ajout[i]])
 
-    def production_mots(self,mot_inconnu):
+    def production_mots(self, mot_inconnu):
         liste_ajout = []
         alphabet = list(string.ascii_lowercase)
         '''

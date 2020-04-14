@@ -17,16 +17,19 @@ class CorrecteurInteractif(CorrecteurAutomatique):
         '''
         debut = time.time()
         mots_possibles = self.dictionnaire.mots_possibles(mot.lower(),self.seuil)  # Variable locale qui est la liste des mots dont la distance entre
+                                                                                   # chacun de ses mots et le mot inconnu est inférieure au seuil.
         temps_execution = time.time() - debut
 
         if self.performance:
             self.donnees_performance.append([self.seuil, self.dictionnaire.compter_nombre_mots(),\
                                              len(mot), temps_execution])
             print(self.donnees_performance)
-                                                                   # chacun de ses mots et le mot inconnu est inférieure au seuil.
+
         if not mots_possibles:  # Condition si aucun mot n'a été trouvé pour un certain mot inconnu du texte
             print(f"Aucun mots n'ont été trouvé dans les dictionnaires pour le mot érroné {mot}")
         else:
+            # On tri les mots de ceux qui ont la plus petite distance jusqu'à ceux qui ont la plus longue
+            mots_possibles = sorted(mots_possibles)
 
             print(f"\nLe mot {mot} (ligne {ligne}) n'est pas dans les dictionnaires.\n")
 
@@ -105,7 +108,7 @@ if __name__ == "__main__":
 
     TransformerTexteFichier(correction, arguments.text_correction)
 
-    TransformerListeFichier(dictionnaire_personnel.mots, arguments.dic_perso)
+    TransformerListeFichier(dictionnaire_personnel.mots, arguments.dic_perso, suffix="\n")
 
     if correcteur_interactif.donnees_performance:
         TransformerListeCsv(correcteur_interactif.donnees_performance, arguments.performance)
