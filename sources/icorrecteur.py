@@ -103,4 +103,4 @@ if __name__ == "__main__":
 
     TransformerTexteFichier(correction, arguments.text_correction)
 
-    TransformerListeFichier(dictionnaire_personnel.mots, arguments.dic_perso, suffix="\n")
+    TransformerListeFichier(dictionnaire_personnel.mots, arguments.dic_perso)
