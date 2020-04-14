@@ -1,5 +1,5 @@
 import string
-from sources.distance_entre_mots import CalculDistanceMots
+from distance_entre_mots import CalculDistanceMots
 
 
 class Dictionnaire(object):

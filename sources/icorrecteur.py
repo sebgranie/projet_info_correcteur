@@ -92,7 +92,13 @@ if __name__ == "__main__":
     dictionnaire_fixe = Dictionnaire(TransformerFichierListe(arguments.dic_text), \
                                      False)
     # Construction de l'objet dictionnaire perso muable
-    dictionnaire_personnel = Dictionnaire(TransformerFichierListe(arguments.dic_perso), \
+    liste_mots_dic_perso = []
+    try:
+        liste_mots_dic_perso = TransformerFichierListe(arguments.dic_perso)
+    except FileNotFoundError as f:
+        print("Vous avez choisi un fichier inexistant.")
+
+    dictionnaire_personnel = Dictionnaire(liste_mots_dic_perso, \
                                            True)
     # L'ensemble de dictionnaire permet d'encapsuler le contenu des 2 dictionnaires à
     # travers une interface unique
