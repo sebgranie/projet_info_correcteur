@@ -5,8 +5,8 @@ from gestionnaire_fichier import TransformerFichierListe, TransformerFichierText
 from acorrecteur import CorrecteurAutomatique
 
 class CorrecteurInteractif(CorrecteurAutomatique):
-    def __init__(self, seuil, dictionnaire, performance = False): # définition du constructeur , les attributs de la classe sont toujours précédes de self.
-        super(CorrecteurInteractif, self).__init__(seuil, dictionnaire, performance)
+    def __init__(self, seuil, dictionnaire): # définition du constructeur , les attributs de la classe sont toujours précédes de self.
+        super(CorrecteurInteractif, self).__init__(seuil, dictionnaire)
 
     def CorrigeMot(self, mot, ligne):
         '''
@@ -15,15 +15,8 @@ class CorrecteurInteractif(CorrecteurAutomatique):
         inférieure au seuil rentré par l'utilisateur. Elle renvoit le mot
         une fois corrigé.
         '''
-        debut = time.time()
         mots_possibles = self.dictionnaire.mots_possibles(mot.lower(),self.seuil)  # Variable locale qui est la liste des mots dont la distance entre
                                                                                    # chacun de ses mots et le mot inconnu est inférieure au seuil.
-        temps_execution = time.time() - debut
-
-        if self.performance:
-            self.donnees_performance.append([self.seuil, self.dictionnaire.compter_nombre_mots(),\
-                                             len(mot), temps_execution])
-            print(self.donnees_performance)
 
         if not mots_possibles:  # Condition si aucun mot n'a été trouvé pour un certain mot inconnu du texte
             print(f"Aucun mots n'ont été trouvé dans les dictionnaires pour le mot érroné {mot}")
@@ -81,12 +74,8 @@ if __name__ == "__main__":
     parser.add_argument('dic_perso', action="store", type=str)
     parser.add_argument('--strategie', action="store", default=2, type=int, help="1 = comparer chacun des mots avec ceux dans les dictionnaires.    \
                                                                        2 = produit les mots qui, suite à une opérations élémentaire sont dans les dictionnaires.")
-    parser.add_argument('--performance', action='store', type=str, help="fichier données performance")
 
     arguments = parser.parse_args()
-    # if arguments.performance:
-    #     print(arguments.performance)
-
 
     # Construction de l'objet dictionnaire fourni immuable
     dictionnaire_fixe = Dictionnaire(TransformerFichierListe(arguments.dic_text), \
@@ -105,7 +94,7 @@ if __name__ == "__main__":
     ensemble_dictionnaire = EnsembleDictionnaire([dictionnaire_fixe, dictionnaire_personnel], arguments.strategie)
 
     # ( Instanciation de la classe CorrecteurInteratif )
-    correcteur_interactif = CorrecteurInteractif(arguments.seuil, ensemble_dictionnaire, arguments.performance)
+    correcteur_interactif = CorrecteurInteractif(arguments.seuil, ensemble_dictionnaire)
 
     corrige, correction = correcteur_interactif.CorrigeTexte(TransformerFichierTexte(arguments.text_original))
 
@@ -115,6 +104,3 @@ if __name__ == "__main__":
     TransformerTexteFichier(correction, arguments.text_correction)
 
     TransformerListeFichier(dictionnaire_personnel.mots, arguments.dic_perso, suffix="\n")
-
-    if correcteur_interactif.donnees_performance:
-        TransformerListeCsv(correcteur_interactif.donnees_performance, arguments.performance)

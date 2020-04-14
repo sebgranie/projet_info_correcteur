@@ -131,26 +131,3 @@ tests/gestionnaire_fichier_test.py ...                                          
 
 =================================== 8 passed in 0.43s ====================================
 ```
-
-## 2. Analyse
-
-Dependences
-
-```
-jupyterlab
-matplotlib
-```
-
-Pour les installer:
-
-```
-pip3 install jupyterlab
-pip3 install matplotlib
-```
-
-
-Pour utiliser matplotlib en interactif dans le Jupyter Lab:
-Installer `conda`
-```
-conda install node.js
-```

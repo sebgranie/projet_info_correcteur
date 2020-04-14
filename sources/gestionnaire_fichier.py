@@ -56,14 +56,3 @@ def TransformerListeFichier(mots, fichier):
     with open(fichier, "w", encoding='utf-8') as f:
         for n in mots:
             f.write(n + "\n")
-
-def TransformerListeCsv(liste, fichier):
-    '''
-    Toutes les listes en entrée de la fonction sont de taille 4.
-    L'objectif est de transformer toutes les sous-listes qui composent la liste
-    en entrée sous forme de tableau.
-    '''
-    with open(fichier, 'a+', encoding='utf-8') as csvfile:
-        csvwriter = csv.writer(csvfile)
-        for n in liste:
-            csvwriter.writerow(n)
