@@ -19,7 +19,7 @@ class CorrecteurInteractif(object):
         mot_trouves = 0
         mot_inconnu = 0
         ligne = 1
-        print(texte)
+        logging.debug(texte)
         print(f"Seuil : {self.seuil}")
         for mot in texte:
             if not mot.isalpha() or \
@@ -112,7 +112,11 @@ if __name__ == "__main__":
     parser.add_argument('dic_perso', action="store", type=str)
     parser.add_argument('strategie', action="store", type=int, help="1 = comparer chacun des mots avec ceux dans les dictionnaires.    \
                                                                        2 = produit les mots qui, suite à une opérations élémentaire sont dans les dictionnaires.")
+    parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
     arguments = parser.parse_args()
+
+    if arguments.verbose:
+        logging.basicConfig(level=logging.DEBUG)
 
     # Construction de l'objet dictionnaire fourni immuable
     dictionnaire_fixe = Dictionnaire(TransformerFichierListe(arguments.dic_text), False)
