@@ -37,11 +37,16 @@ Voici le diagramme de classe representant l'architecture de notre code. Les '_I_
 
 ![diagramme-classe](diagramme-classe.png)
 
+Légende:
+
+![legende](legende.png)
+
 ### 1.3. Execution
 
 Executer les commandes suivantes dans le terminal au niveau du dossier `projet_info_correcteur` où se trouvent tous les fichiers requis par le programme:
 Nous accèderons aux fichiers sources et ressources grâce à des chemins relatifs comme montré ci-dessous.
 Nous utiliserons le texte `ressources/exemple1.txt` comme exemple de texte à corriger.
+Si vous souhaitez afficher dans la console la liste des mots séquencés qui est étudié par le programme, veuillez rajouter la commande `-v` après les arguments requis par le programme.
 
 #### 1.4.1 Correcteur Interactif:
 
@@ -131,3 +136,19 @@ tests/gestionnaire_fichier_test.py ...                                          
 
 =================================== 8 passed in 0.43s ====================================
 ```
+
+### Section équivalente au LISEZ.MOI.txt
+
+#### Les fichiers Python
+`icorrecteur.py`: Le correcteur interactif.
+`acorrecteur.py`: Le correcteur automatique.
+`distance_entre_mots.py`: Calculateur de distance entre deux mots.
+`dictionnaire.py`: Les classes dictionnaire et EnsembleDictionnaire qui englobent des méthodes qui permettent d'effectuer des opérations sur les dictionnaires.
+`gestionnaire_fichier.y`: Catalogue de fonctions qui permettent de transformer des fichiers en liste et inversement.
+
+#### Les textes et dictionnaires
+`frgut.dic`: Le dictionnaire français du projet GUTenberg.
+`dico1.dic`: Dictionnaire réduit utilisé pour faire tourner le programme plus rapidement.
+`dico_perso.txt`: Dictionnaire personnel de l'utilisateur.
+`exemple1.txt`: Exemple de texte à corriger.
+`exemple2.txt`: Exemple de texte à utiliser pour trouver des voies d'optimisation de notre programme.

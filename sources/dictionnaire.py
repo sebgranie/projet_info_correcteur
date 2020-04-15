@@ -3,6 +3,12 @@ from distance_entre_mots import CalculDistanceMots
 
 
 class Dictionnaire(object):
+    '''
+    L'objectif de la classe Dictionnaire est de pouvoir
+    manipuler les dictionnaires à l'aide de méthodes dans
+    le cadre de ce projet informatique comme on le ferait
+    dans le monde réel.
+    '''
     def __init__(self, mots, muable = True):
         if isinstance(mots, list):
             self.mots = mots
@@ -10,34 +16,21 @@ class Dictionnaire(object):
             raise TypeError("L'argument mots n'est pas une liste de mots.")
         self.muable = muable
 
-    # L'intérêt d'utiliser les méthodes suivantes est de réduire la
-    # taille du code quand nous manipulons les objets.
-
-    # Cette méthode permet de compter le nombre de mot
-    # d'un dictionnaire par exemple pour connaître le
-    # nombre d'élement qu'il contient.
     def compter_nombre_mots(self):
-        return len(self.mots)                  # Retourne le nombre de mot du dictionnaire
+        return len(self.mots)
 
-    # Cette méthode permet d'ajouter un mot à un dictionnaire.
-    # Cette fonctionnnalité est intéressante lorsque
-    # l'utilisateur souhaite ajouter un mot initialement
-    # introuvable dans le dictionnaire. Cette méthode fonctionne
-    # seulement si le caractère muable du dictionnaire est validé.
+
     def ajouter_mot(self, mot):
-        if self.muable:                         # ajout du mot seulement dans le dictionnaire muable (dictionnaire perso)
-            if isinstance(mot, str):            # fonctionne seulement si le paramètre est une chaîne de caractère (type: str)
-                if not self.chercher_mot(mot):  # Mot introuvable dans le dictionnaire
-                    self.mots.append(mot)       # Traduit l'unicité d'un mot dans le dictionnaire
+        if self.muable:
+            if isinstance(mot, str):
+                if not self.chercher_mot(mot):
+                    self.mots.append(mot)
             else:
                 raise TypeError("TypeError exception thrown")
 
-    # Cette méthode est très utile pour vérifier la présence d'un
-    # mot du texte à corriger dans le dictionnaire. Elle renvoit
-    # un booléen: True le mot est dans le dictionnaire,
-    # (respectivement False le mot ne s'y trouve pas).
+
     def chercher_mot(self, mot):
-        return mot in self.mots   # Retourne un booléen
+        return mot in self.mots
 
     def mots_possibles(self, mot_inconnu, seuil):
         mots_possibles = []
@@ -51,10 +44,10 @@ class Dictionnaire(object):
 class EnsembleDictionnaire(Dictionnaire):
     '''
     L'objectif de cette classe est d'encapsuler les deux dictionnaires:
-    le dictionnaire de Mr Crégut et le dictionnairre personnel.
+    le dictionnaire principal et le dictionnairre personnel.
     L'objectif est de pouvoir centraliser les actions demandés dans le
-    programme principal. Nous y retrouvons les mêmes noms de méthodes
-    que dans la classe dictionnaire ci-dessus.
+    programme principal. Nous y retrouvons par conséquent les mêmes noms
+    de méthodes que dans la classe dictionnaire ci-dessus.
     '''
     def __init__(self, dictionnaires, strategie = 1):
         self.strategie = strategie
@@ -82,6 +75,12 @@ class EnsembleDictionnaire(Dictionnaire):
 
 
     def mots_possibles(self, mot_inconnu, seuil):
+        '''
+        L'objectif de cette méthode est de produire une liste
+        nommée mots_possibles composée de sous-listes constituées
+        de deux éléments (la distance entre le mot_inconnu initial
+        et un mot possible de correction, et ce mot possible)
+        '''
         mots_possibles = []
         if self.strategie == 1:
             for d in self.dictionnaires:
@@ -98,7 +97,6 @@ class EnsembleDictionnaire(Dictionnaire):
                 fin = len(liste_ajout)
 
             for mot in liste_ajout:
-                print(mot)
                 if self.chercher_mot(mot[1]):
                     mots_possibles.append(mot)
 

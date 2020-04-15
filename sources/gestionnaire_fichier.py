@@ -1,6 +1,4 @@
 import re
-import csv
-
 
 def TransformerFichierListe(fichier):
     '''
@@ -11,20 +9,17 @@ def TransformerFichierListe(fichier):
     liste = []
     with open(fichier, "r", encoding='utf-8') as f:
         for n in f:
-            # n contient iterativement chaque ligne du fichier.
-            # on utilise split pour enlever le caractère
-            # (unique) '\n' à la fin de la ligne
             for word in n.split():
                 liste.append(word)
     return liste
 
 def TransformerFichierTexte(fichier):
     '''
-    Cette fonction transforme le fichier texte à corriger
-    du prof en une liste de liste de mots. Chaque sous-liste
-    correspond aux mots d'une ligne du texte initial.
-    Le but est de faciliter la remise en forme du texte corrigé
-    où chaque fin de liste correspond à un saut de ligne.
+    Cette fonction transforme le fichier texte à
+    corriger en une liste de liste de mots qui pourra
+    être affichée lors de l'éxécution du programme
+    en rajoutant la commande "-v" à la fin des
+    arguments requis par le programme.
     '''
     texte = []
     with open(fichier, "r", encoding='utf-8') as f:
@@ -37,21 +32,19 @@ def TransformerFichierTexte(fichier):
 
 def TransformerTexteFichier(texte ,fichier):
     '''
-    L'objectif de cette fonction est de transformer
-    notre liste de liste une fois corrigée, en fichier texte.
-    On rappelle que chaque sous-liste contient les mots d'une
-    seule ligne.
+    L'objectif de cette fonction est de
+    transformer nos liste corrige et correction
+    une fois corrigée, en fichier texte.
     '''
     with open(fichier, "w", encoding='utf-8') as f:
         for mot in texte:
-            f.write(mot)  # écrire le mot dans le fichier texte
+            f.write(mot)
 
 def TransformerListeFichier(mots, fichier):
     '''
-    Cette fonction transforme un liste de mots en un fichier
-    sur lequel est écrit tous les mots de la liste avec un mot
-    par ligne. Cette fonction est utilisée pour l'utilisation
-    des dictionnaires.
+    Cette fonction transforme un liste de mots en
+    un fichier. Cette fonction est utilisée dans notre
+    programme pour transformer le format des dictionnaires.
     '''
     with open(fichier, "w", encoding='utf-8') as f:
         for n in mots:

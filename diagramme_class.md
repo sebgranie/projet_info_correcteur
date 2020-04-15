@@ -57,3 +57,13 @@ CorrecteurAutomatique ^-- CorrecteurInteractif
 
 @enduml
 ```
+
+
+```puml
+@startuml
+A ^-- B : B dérive A
+C --> D : C dépend de D
+E o-- F : F appartient à E\n(F vit sans E)
+G *-- H : G est composé de H\n(H ne vit pas sans G)
+@enduml
+```
