@@ -43,8 +43,10 @@ class CorrecteurAutomatique {
 }
 
 class CorrecteurInteractif {
-  + __init__(int: seuil, EnsembleDictionnaire: dictionnaire)
+  + __init__( EnsembleDictionnaire: dictionnaire)
+  + CorrigeTexte(list: texte) : str, str
   + CorrigeMot(str: mot, int: ligne) : str
+  + dictionnaire : EnsembleDictionnaire
 }
 
 CorrecteurInteractif --> gestionnaire_fichier_py
@@ -52,7 +54,7 @@ CorrecteurInteractif o-- EnsembleDictionnaire
 CorrecteurAutomatique --> gestionnaire_fichier_py
 Dictionnaire --> distance_entre_mots_py
 CorrecteurAutomatique o-- EnsembleDictionnaire
-CorrecteurAutomatique ^-- CorrecteurInteractif
+
 
 @enduml
 ```
