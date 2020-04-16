@@ -111,8 +111,8 @@ if __name__ == '__main__':
     corrige, correction = correcteur_automatique.CorrigeTexte(TransformerFichierListe_Texte(arguments.text_original))
 
     # On transfomr les liste corrige et correction sous forme de fichier
-    TransformerTexteFichier_Dico(corrige,arguments.text_corrige)
-    TransformerTexteFichier_Dico(correction, arguments.text_correction)
+    TransformerListeFichier_Dico(corrige,arguments.text_corrige)
+    TransformerListeFichier_Dico(correction, arguments.text_correction)
 
     # On transforme la liste de mots du dictionnaire personnel sous forme de fichier
-    TransformerListeFichier_Dico(dictionnaire_personnel.mots, arguments.dic_perso)
+    TransformerListeFichier_Dico(dictionnaire_personnel.mots_dico, arguments.dic_perso)

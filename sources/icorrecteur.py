@@ -143,4 +143,4 @@ if __name__ == "__main__":
     TransformerListeFichier_Texte(correction, arguments.text_correction)
 
     # On transforme le dictionnaire personnel (liste) sous forme de fichier
-    TransformerListeFichier_Dico(dictionnaire_personnel.mots, arguments.dic_perso)
+    TransformerListeFichier_Dico(dictionnaire_personnel.mots_dico, arguments.dic_perso)
