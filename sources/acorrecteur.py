@@ -30,7 +30,6 @@ class CorrecteurAutomatique(object):
                     mot_trouves +=1
                 corrige.append(mot)
             else:
-                self.seuil = int(len(mot)/2)
                 mot_inconnu +=1
                 mot_corrige = self.CorrigeMot(mot, ligne)
 

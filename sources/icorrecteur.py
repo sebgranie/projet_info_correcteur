@@ -4,8 +4,7 @@ from dictionnaire import Dictionnaire, EnsembleDictionnaire
 from gestionnaire_fichier import TransformerFichierListe_Dico, TransformerFichierListe_Texte, TransformerListeFichier_Dico, TransformerListeFichier_Texte
 
 class CorrecteurInteractif(object):
-    def __init__(self, seuil, dictionnaire):
-        self.seuil = seuil
+    def __init__(self, dictionnaire):
         self.dictionnaire = dictionnaire
 
     def CorrigeTexte(self, texte):
@@ -20,7 +19,6 @@ class CorrecteurInteractif(object):
         mot_inconnu = 0
         ligne = 1
         logging.debug(texte)
-        print(f"Seuil : {self.seuil}")
         for mot in texte:
             if not mot.isalpha() or \
                self.dictionnaire.chercher_mot(mot.lower()) or \
@@ -29,7 +27,7 @@ class CorrecteurInteractif(object):
                     mot_trouves +=1
                 corrige.append(mot)
             else:
-                self.seuil = int(len(mot)/2)
+                seuil = int(len(mot)/2)
                 mot_inconnu +=1
                 mot_corrige = self.CorrigeMot(mot, ligne)
 
@@ -57,7 +55,8 @@ class CorrecteurInteractif(object):
         inférieure à la moitié de la taille du mot inconnu. Elle renvoit le mot
         une fois corrigé.
         '''
-        mots_possibles = self.dictionnaire.mots_possibles(mot.lower(),self.seuil)
+        seuil = int(len(mot)/2)
+        mots_possibles = self.dictionnaire.mots_possibles(mot.lower(),seuil)
 
         if not mots_possibles:
             print(f"Aucun mots n'ont été trouvé dans les dictionnaires pour le mot érroné {mot}")
@@ -66,7 +65,7 @@ class CorrecteurInteractif(object):
             mots_possibles = sorted(mots_possibles)
 
             print(f"\nLe mot {mot} (ligne {ligne}) n'est pas dans les dictionnaires.\n")
-
+            print(f"Seuil : {seuil}")
             for i in range(len(mots_possibles)):
                 print(f"{i+1}. {mots_possibles[i][1]} ({mots_possibles[i][0]})")
 
@@ -107,7 +106,6 @@ if __name__ == "__main__":
     parser.add_argument('text_original', action="store", type=str)
     parser.add_argument('text_corrige', action="store", type=str)
     parser.add_argument('text_correction', action="store", type=str)
-    parser.add_argument('seuil', action="store", type=int)
     parser.add_argument('dic_text', action="store", type=str)
     parser.add_argument('dic_perso', action="store", type=str)
     parser.add_argument('strategie', action="store", type=int, help="1 = comparer chacun des mots avec ceux dans les dictionnaires.    \
@@ -133,7 +131,7 @@ if __name__ == "__main__":
     ensemble_dictionnaire = EnsembleDictionnaire([dictionnaire_fixe, dictionnaire_personnel], arguments.strategie)
 
     # ( Instanciation de la classe CorrecteurInteratif )
-    correcteur_interactif = CorrecteurInteractif(arguments.seuil, ensemble_dictionnaire)
+    correcteur_interactif = CorrecteurInteractif(ensemble_dictionnaire)
 
     # On assigne à corrige et correction le résultat de la méthode CorrigeTexte sur l'objet correcteur_interactif
     corrige, correction = correcteur_interactif.CorrigeTexte(TransformerFichierListe_Texte(arguments.text_original))
