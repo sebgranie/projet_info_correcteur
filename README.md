@@ -35,7 +35,7 @@ pip3 install numpy
 
 Voici le diagramme de classe representant l'architecture de notre code. Les '_I_' en violet representent des fichiers comportants seulement des fonctions.
 
-![diagramme-classe](diagramme-classe.png)
+![diagramme-classe](Capture_ecran_diagramme.png)
 
 Légende:
 

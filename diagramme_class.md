@@ -14,21 +14,20 @@ EnsembleDictionnaire o-- "2" Dictionnaire
 Dictionnaire ^-- EnsembleDictionnaire
 
 class Dictionnaire {
-  + __init__(list: mots, bool: muable)
+  + __init__(list: mots_dico, bool: muable)
   + chercher_mot(str: mot) : bool
   + compter_nombre_mots() : int
   + ajouter_mot(str: mot)
   + mots_possibles(str: mot_inconnu, int: seuil)
-  + mots : list
+  + mots_dico : list
   + muable : bool
 }
 
 interface gestionnaire_fichier_py {
-  + TransformerFichierListe(str: fichier) : list
-  + TransformerListeFichier(list: mots, str: fichier)
-  + TransformerFichierTexte(str: fichier)
-  + TransformerTexteFichier(list: texte, str: fichier)
-  + TransformerListeCsv(str: liste, str: fichier)
+  + TransformerFichierListe_Dico(str: fichier) : list
+  + TransformerListeFichier_Dico(list: mots, str: fichier)
+  + TransformerFichierListe_Texte(str: fichier)
+  + TransformerListeFichier_Texte(list: texte, str: fichier)
 }
 
 interface distance_entre_mots_py {

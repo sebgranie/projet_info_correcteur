@@ -2,7 +2,7 @@ import argparse
 import random
 import logging
 from dictionnaire import Dictionnaire, EnsembleDictionnaire
-from gestionnaire_fichier import TransformerFichierListe, TransformerFichierTexte, TransformerListeFichier, TransformerTexteFichier
+from gestionnaire_fichier import TransformerFichierListe_Dico, TransformerFichierListe_Texte, TransformerListeFichier_Dico, TransformerListeFichier_Texte
 
 class CorrecteurAutomatique(object):
     def __init__(self, seuil, dictionnaire):
@@ -81,9 +81,9 @@ if __name__ == '__main__':
     parser.add_argument('text_original', action="store", type=str)
     parser.add_argument('text_corrige', action="store", type=str)
     parser.add_argument('text_correction', action="store", type=str)
-    parser.add_argument('seuil', action="store", type=int)
     parser.add_argument('dic_text', action="store", type=str)
     parser.add_argument('dic_perso', action="store", type=str)
+    parser.add_argument('seuil', action="store", type=int)
     parser.add_argument('strategie', action="store", type=int, help="1 = comparer chacun des mots avec ceux dans les dictionnaires.    \
                                                                        2 = produit les mots qui, suite à une opérations élémentaire sont dans les dictionnaires.")
     parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
@@ -95,12 +95,11 @@ if __name__ == '__main__':
 
 
 
-
     # Construction de l'objet dictionnaire fourni immuable
-    dictionnaire_fixe = Dictionnaire(TransformerFichierListe(arguments.dic_text), False)
+    dictionnaire_fixe = Dictionnaire(TransformerFichierListe_Dico(arguments.dic_text), False)
 
     # Construction de l'objet dictionnaire perso muable
-    dictionnaire_personnel = Dictionnaire(TransformerFichierListe(arguments.dic_perso), True)
+    dictionnaire_personnel = Dictionnaire(TransformerFichierListe_Dico(arguments.dic_perso), True)
 
     # L'ensemble de dictionnaire permet d'encapsuler le contenu des 2 dictionnaires à travers une interface unique
     ensemble_dictionnaire = EnsembleDictionnaire([dictionnaire_fixe, dictionnaire_personnel], arguments.strategie)
@@ -109,11 +108,11 @@ if __name__ == '__main__':
     correcteur_automatique = CorrecteurAutomatique(arguments.seuil, ensemble_dictionnaire)
 
     # On assigne à corrige et correction le résultat de la méthode CorrigeTexte sur l'objet correcteur_interactif
-    corrige, correction = correcteur_automatique.CorrigeTexte(TransformerFichierTexte(arguments.text_original))
+    corrige, correction = correcteur_automatique.CorrigeTexte(TransformerFichierListe_Texte(arguments.text_original))
 
     # On transfomr les liste corrige et correction sous forme de fichier
-    TransformerTexteFichier(corrige,arguments.text_corrige)
-    TransformerTexteFichier(correction, arguments.text_correction)
+    TransformerTexteFichier_Dico(corrige,arguments.text_corrige)
+    TransformerTexteFichier_Dico(correction, arguments.text_correction)
 
     # On transforme la liste de mots du dictionnaire personnel sous forme de fichier
-    TransformerListeFichier(dictionnaire_personnel.mots, arguments.dic_perso)
+    TransformerListeFichier_Dico(dictionnaire_personnel.mots, arguments.dic_perso)

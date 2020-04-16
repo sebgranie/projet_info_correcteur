@@ -1,7 +1,7 @@
 import argparse
 import logging
 from dictionnaire import Dictionnaire, EnsembleDictionnaire
-from gestionnaire_fichier import TransformerFichierListe, TransformerFichierTexte, TransformerListeFichier, TransformerTexteFichier
+from gestionnaire_fichier import TransformerFichierListe_Dico, TransformerFichierListe_Texte, TransformerListeFichier_Dico, TransformerListeFichier_Texte
 
 class CorrecteurInteractif(object):
     def __init__(self, seuil, dictionnaire):
@@ -119,12 +119,12 @@ if __name__ == "__main__":
         logging.basicConfig(level=logging.DEBUG)
 
     # Construction de l'objet dictionnaire fourni immuable
-    dictionnaire_fixe = Dictionnaire(TransformerFichierListe(arguments.dic_text), False)
+    dictionnaire_fixe = Dictionnaire(TransformerFichierListe_Dico(arguments.dic_text), False)
 
     # Construction de l'objet dictionnaire perso muable
     liste_mots_dic_perso = []
     try:
-        liste_mots_dic_perso = TransformerFichierListe(arguments.dic_perso)
+        liste_mots_dic_perso = TransformerFichierListe_Dico(arguments.dic_perso)
     except FileNotFoundError as f:
         print("Vous avez choisi un fichier inexistant.")
     dictionnaire_personnel = Dictionnaire(liste_mots_dic_perso, True)
@@ -136,11 +136,11 @@ if __name__ == "__main__":
     correcteur_interactif = CorrecteurInteractif(arguments.seuil, ensemble_dictionnaire)
 
     # On assigne à corrige et correction le résultat de la méthode CorrigeTexte sur l'objet correcteur_interactif
-    corrige, correction = correcteur_interactif.CorrigeTexte(TransformerFichierTexte(arguments.text_original))
+    corrige, correction = correcteur_interactif.CorrigeTexte(TransformerFichierListe_Texte(arguments.text_original))
 
     # On transforme les listes utilisées dans le programme sous forme de fichier
-    TransformerTexteFichier(corrige,arguments.text_corrige)
-    TransformerTexteFichier(correction, arguments.text_correction)
+    TransformerListeFichier_Texte(corrige,arguments.text_corrige)
+    TransformerListeFichier_Texte(correction, arguments.text_correction)
 
     # On transforme le dictionnaire personnel (liste) sous forme de fichier
-    TransformerListeFichier(dictionnaire_personnel.mots, arguments.dic_perso)
+    TransformerListeFichier_Dico(dictionnaire_personnel.mots, arguments.dic_perso)

@@ -1,6 +1,6 @@
 import re
 
-def TransformerFichierListe(fichier):
+def TransformerFichierListe_Dico(fichier):
     '''
     Cette fonction transforme un fichier qui contient un mot
     par ligne en une liste contenant tout ces mots. Cette fonction
@@ -13,7 +13,7 @@ def TransformerFichierListe(fichier):
                 liste.append(word)
     return liste
 
-def TransformerFichierTexte(fichier):
+def TransformerFichierListe_Texte(fichier):
     '''
     Cette fonction transforme le fichier texte à
     corriger en une liste de liste de mots qui pourra
@@ -30,7 +30,7 @@ def TransformerFichierTexte(fichier):
 
     return list(filter(None, texte))  # filter permet d'enlever les caractères de taille 0 exemple ""
 
-def TransformerTexteFichier(texte ,fichier):
+def TransformerListeFichier_Texte(texte ,fichier):
     '''
     L'objectif de cette fonction est de
     transformer nos liste corrige et correction
@@ -40,7 +40,7 @@ def TransformerTexteFichier(texte ,fichier):
         for mot in texte:
             f.write(mot)
 
-def TransformerListeFichier(mots, fichier):
+def TransformerListeFichier_Dico(mots, fichier):
     '''
     Cette fonction transforme un liste de mots en
     un fichier. Cette fonction est utilisée dans notre

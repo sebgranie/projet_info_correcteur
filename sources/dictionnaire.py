@@ -7,34 +7,35 @@ class Dictionnaire(object):
     L'objectif de la classe Dictionnaire est de pouvoir
     manipuler les dictionnaires à l'aide de méthodes dans
     le cadre de ce projet informatique comme on le ferait
-    dans le monde réel.
+    dans le monde réel. L'attribut mots_dico représente
+    les mots d'un dictionnaire.
     '''
-    def __init__(self, mots, muable = True):
-        if isinstance(mots, list):
-            self.mots = mots
+    def __init__(self, mots_dico, muable = True):
+        if isinstance(mots_dico, list):
+            self.mots_dico = mots_dico
         else:
-            raise TypeError("L'argument mots n'est pas une liste de mots.")
+            raise TypeError("L'argument mots_dico n'est pas une liste de mots.")
         self.muable = muable
 
     def compter_nombre_mots(self):
-        return len(self.mots)
+        return len(self.mots_dico)
 
 
     def ajouter_mot(self, mot):
         if self.muable:
             if isinstance(mot, str):
                 if not self.chercher_mot(mot):
-                    self.mots.append(mot)
+                    self.mots_dico.append(mot)
             else:
                 raise TypeError("TypeError exception thrown")
 
 
     def chercher_mot(self, mot):
-        return mot in self.mots
+        return mot in self.mots_dico
 
     def mots_possibles(self, mot_inconnu, seuil):
         mots_possibles = []
-        for mot in self.mots:
+        for mot in self.mots_dico:
             distance = CalculDistanceMots(mot_inconnu, mot)
             if distance < seuil:
                 mots_possibles.append([distance,mot])
@@ -92,7 +93,7 @@ class EnsembleDictionnaire(Dictionnaire):
             fin = 1
             for i in range(seuil):
                 for j in range(debut, fin, 1):
-                    liste_ajout.extend(self.production_mots(liste_ajout[j][1], i+1))
+                    liste_ajout.extend(self.production_mots(mots_generes[j][1], i+1))
                 debut = fin
                 fin = len(liste_ajout)
 
@@ -103,20 +104,20 @@ class EnsembleDictionnaire(Dictionnaire):
             return mots_possibles
 
     def production_mots(self, mot_inconnu, distance):
-        liste_ajout = []
+        mots_generes = []
         alphabet = list(string.ascii_lowercase)
         '''
         Ajout
         '''
         for indice in range(len(mot_inconnu)):
             for lettre in alphabet:
-                liste_ajout.append([distance, mot_inconnu[:indice] + lettre + mot_inconnu[indice:]])
+                mots_generes.append([distance, mot_inconnu[:indice] + lettre + mot_inconnu[indice:]])
         '''
         Suppression
         '''
         for indice in range(len(mot_inconnu)):
             mot_suppression = mot_inconnu[:indice] + mot_inconnu[(indice+1):]
-            liste_ajout.append([distance, mot_suppression])
+            mots_generes.append([distance, mot_suppression])
         '''
         Transposition
 
@@ -125,16 +126,16 @@ class EnsembleDictionnaire(Dictionnaire):
         vide ce qui donne en sortie le mot à l'identique.
         '''
         for indice in range(len(mot_inconnu)-1):
-            liste_ajout.append([distance, mot_inconnu[:indice] + mot_inconnu[indice+1:indice+2] + \
+            mots_generes.append([distance, mot_inconnu[:indice] + mot_inconnu[indice+1:indice+2] + \
                                 mot_inconnu[indice:indice+1] + mot_inconnu[indice+2:]])
         '''
         Substitution
         '''
         for indice in range(len(mot_inconnu)):
             for lettre in alphabet:
-                liste_ajout.append([distance, mot_inconnu[:indice] + lettre + mot_inconnu[indice+1:]])
+                mots_generes.append([distance, mot_inconnu[:indice] + lettre + mot_inconnu[indice+1:]])
 
-        return liste_ajout
+        return mots_generes
 
 
 
