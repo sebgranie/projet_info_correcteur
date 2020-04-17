@@ -1,4 +1,4 @@
-from sources.gestionnaire_fichier import TransformerFichierListe, TransformerListeFichier, TransformerFichierTexte, TransformerTexteFichier
+from sources.gestionnaire_fichier import TransformerFichierListe_Dico, TransformerListeFichier_Dico, TransformerFichierListe_Texte, TransformerListeFichier_Texte
 import pytest
 import os
 from pathlib import Path
@@ -9,8 +9,8 @@ from pathlib import Path
 dic = Path(__file__).parent.resolve() / "words.txt"
 
 def test_transformer_fichier_liste():
-    assert isinstance(TransformerFichierListe(dic),list)
-    l = TransformerFichierListe(dic)
+    assert isinstance(TransformerFichierListe_Dico(dic),list)
+    l = TransformerFichierListe_Dico(dic)
     assert len(l) == 466551
     assert "ZZZ" in l
     assert "doubt" in l
@@ -18,12 +18,12 @@ def test_transformer_fichier_liste():
 
 def test_transformer_liste_fichier():
     liste = ["un", "deux", "trois"]
-    TransformerListeFichier(liste, "fichier.txt")
-    assert TransformerFichierListe("fichier.txt") == liste
+    TransformerListeFichier_Dico(liste, "fichier.txt")
+    assert TransformerFichierListe_Dico("fichier.txt") == liste
     os.remove("fichier.txt")
 
 def test_transformer_texte_fichier():
     texte = ["un", " ", "deux", "\n", "trois", " ", "quatre"]
-    TransformerTexteFichier(texte, "fichier.txt")
-    assert TransformerFichierTexte("fichier.txt") == texte
+    TransformerListeFichier_Texte(texte, "fichier.txt")
+    assert TransformerFichierListe_Texte("fichier.txt") == texte
     os.remove("fichier.txt")

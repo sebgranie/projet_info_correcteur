@@ -1,4 +1,5 @@
 from sources.dictionnaire import Dictionnaire, EnsembleDictionnaire
+from sources.distance_entre_mots import CalculDistanceMots
 import pytest
 
 def test_dictionnaire_chercher_mot():
