@@ -101,7 +101,7 @@ if __name__ == "__main__":
 # ArgumentParser permet d'améliorer la compréhension du programme
 # vis à vis de l'utilisateur, en particulier quelle(s) variable(s) sont
 # demandés en paramètres de la fonction.
-    parser = argparse.ArgumentParser(description="Correction interactif d'un texte ")
+    parser = argparse.ArgumentParser(description="Correction interactive d'un texte ")
     parser.add_argument('text_original', action="store", type=str)
     parser.add_argument('text_corrige', action="store", type=str)
     parser.add_argument('text_correction', action="store", type=str)
