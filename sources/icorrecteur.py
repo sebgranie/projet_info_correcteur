@@ -32,7 +32,6 @@ class CorrecteurInteractif(object):
                 mot_corrige = self.CorrigeMot(mot, ligne)
 
                 corrige.append(mot_corrige)
-
                 sous_liste.append([ligne, mot, mot_corrige])
 
             if "\n" in mot:

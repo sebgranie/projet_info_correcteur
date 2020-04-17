@@ -93,7 +93,7 @@ class EnsembleDictionnaire(Dictionnaire):
             fin = 1
             for i in range(seuil):
                 for j in range(debut, fin, 1):
-                    liste_ajout.extend(self.production_mots(mots_generes[j][1], i+1))
+                    liste_ajout.extend(self.production_mots(liste_ajout[j][1], i+1))
                 debut = fin
                 fin = len(liste_ajout)
 

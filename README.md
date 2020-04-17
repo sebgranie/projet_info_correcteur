@@ -4,6 +4,8 @@
 
 ## 1. Code
 
+[Lien Github vers notre code hébergé en ligne](https://github.com/sebgranie/projet_info_correcteur)
+
 ### 1.1. Dependences
 
 * **Python3**
@@ -152,3 +154,4 @@ tests/gestionnaire_fichier_test.py ...                                          
 `dico_perso.txt`: Dictionnaire personnel de l'utilisateur.
 `exemple1.txt`: Exemple de texte à corriger.
 `exemple2.txt`: Exemple de texte à utiliser pour trouver des voies d'optimisation de notre programme.
+
