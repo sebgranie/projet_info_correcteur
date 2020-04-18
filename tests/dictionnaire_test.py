@@ -45,7 +45,7 @@ def test_constructeur():
 
 def test_dictionnaire_chercher_mot():
     d = EnsembleDictionnaire([Dictionnaire(["oui", "non","manger"]),\
-                              Dictionnaire(["oun"])])
+                              Dictionnaire(["oun"])],1)
     assert d.chercher_mot("oui")
     assert d.chercher_mot("non")
     assert d.chercher_mot("manger")
@@ -57,24 +57,24 @@ def test_dictionnaire_chercher_mot():
 
 def test_compter_nombre_mot():
     d = EnsembleDictionnaire([Dictionnaire(["oui", "non","manger"],),\
-                              Dictionnaire(["oun"])])
+                              Dictionnaire(["oun"])],1)
     assert d.compter_nombre_mots() == 4
 
 
 
 def test_ajouter_mot():
     d = EnsembleDictionnaire([Dictionnaire(["oui", "non","manger"]),\
-                              Dictionnaire(["oun"])])
+                              Dictionnaire(["oun"])],1)
     d.ajouter_mot("the")
     assert d.compter_nombre_mots() == 6
 
     d = EnsembleDictionnaire([Dictionnaire(["oui", "non","manger"],False),\
-                              Dictionnaire(["oun"])])
+                              Dictionnaire(["oun"])],1)
     d.ajouter_mot("the")
     assert d.compter_nombre_mots() == 5
 
     d = EnsembleDictionnaire([Dictionnaire(["oui", "non","manger"],False),\
-                              Dictionnaire(["oun"],False)])
+                              Dictionnaire(["oun"],False)],1)
     d.ajouter_mot("the")
     assert d.compter_nombre_mots() == 4
 
@@ -82,7 +82,7 @@ def test_ajouter_mot():
 def test_constructeur():
     d = EnsembleDictionnaire([Dictionnaire(["oui", "non","manger"]), \
                              Dictionnaire(["bouger"]), \
-                             Dictionnaire([])])
+                             Dictionnaire([])],1)
     assert len(d.dictionnaires) == 3
     assert d.compter_nombre_mots() == 4
 
