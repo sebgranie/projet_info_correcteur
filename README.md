@@ -48,7 +48,7 @@ Légende:
 Executer les commandes suivantes dans le terminal au niveau du dossier `projet_info_correcteur` où se trouvent tous les fichiers requis par le programme:
 Nous accèderons aux fichiers sources et ressources grâce à des chemins relatifs comme montré ci-dessous.
 Nous utiliserons le texte `ressources/exemple1.txt` comme exemple de texte à corriger.
-Si vous souhaitez afficher dans la console la liste des mots séquencés qui est étudié par le programme, veuillez rajouter la commande `-v` après les arguments requis par le programme.
+
 
 #### 1.4.1 Correcteur Interactif:
 
@@ -64,9 +64,9 @@ Voici un exemple sur system **Unix** (Linux et macOS):
 python3 sources/icorrecteur.py ressources/exemple1.txt \
                                ressources/exemple1_corrige.txt \
                                ressources/exemple1_correction.txt \
-                               4 \
                                ressources/frgut.dic \
-                               ressources/dictionnaire_perso.dic
+                               ressources/dictionnaire_perso.dic \
+                               1
 ```
 
 Voici le même exemple sur **Windows**:
@@ -75,10 +75,11 @@ Voici le même exemple sur **Windows**:
 python3 sources\icorrecteur.py ressources\exemple1.txt \
                                ressources\exemple1_corrige.txt \
                                ressources\exemple1_correction.txt \
-                               4 \
                                ressources\frgut.dic \
-                               ressources\dictionnaire_perso.dic
+                               ressources\dictionnaire_perso.dic \
+                               1
 ```
+En précisant la commande `-v` suite à ceux listé ci-dessus, elle permet en tant qu'utilisateur du programme de recevoir plus d'information de la part du programme en affichant plus d'informations dans le terminal.
 
 #### 1.4.2 Correcteur Automatique:
 
@@ -94,9 +95,10 @@ python3 sources/acorrecteur.py --help
 python3 sources/acorrecteur.py ressources/exemple1.txt \
                                ressources/exemple1_corrige.txt \
                                ressources/exemple1_correction.txt \
-                               4 \
                                ressources/frgut.dic \
-                               ressources/dictionnaire_perso.dic
+                               ressources/dictionnaire_perso.dic \
+                               4 \
+                               1
 ```
 
 * **Windows**:
@@ -105,12 +107,13 @@ python3 sources/acorrecteur.py ressources/exemple1.txt \
 python3 sources\acorrecteur.py ressources\exemple1.txt \
                                ressources\exemple1_corrige.txt \
                                ressources\exemple1_correction.txt \
-                               4 \
                                ressources\frgut.dic \
-                               ressources\dictionnaire_perso.dic
+                               ressources\dictionnaire_perso.dic \
+                               4 \
+                               1
 ```
 
-
+Le fonctionnement de la commande `-v`reste valable également pour le correcteur automatique.
 
 ### 1.3. Tests
 
@@ -122,7 +125,7 @@ pip3 install pytest
 Pour exécuter tous les tests du projet, écrire:
 
 ```bash
-$ pytest tests/
+pytest
 ```
 
 Voici les resultats attendus:
@@ -136,7 +139,7 @@ tests/dictionnaire_test.py ....                                                 
 tests/distance_entre_mots_test.py .                                                [ 62%]
 tests/gestionnaire_fichier_test.py ...                                             [100%]
 
-=================================== 8 passed in 0.43s ====================================
+=================================== 8 passed in 0.45s ====================================
 ```
 
 ### Section équivalente au LISEZ.MOI.txt
@@ -155,3 +158,7 @@ tests/gestionnaire_fichier_test.py ...                                          
 `exemple1.txt`: Exemple de texte à corriger.
 `exemple2.txt`: Exemple de texte à utiliser pour trouver des voies d'optimisation de notre programme.
 
+#### Les fichiers tests Python
+`distance_entre_mots_test.py`: Fichier test du calculateur de distance entre deux mots.
+`dictionnaire_test.py`: Fichier test des classes dictionnaire et EnsembleDictionnaire
+`gestionnaire_fichier_test.py`: Fichier test du gestionnaire de fichier

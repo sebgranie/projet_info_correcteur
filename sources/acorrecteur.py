@@ -2,7 +2,10 @@ import argparse
 import random
 import logging
 from dictionnaire import Dictionnaire, EnsembleDictionnaire
-from gestionnaire_fichier import TransformerFichierListe_Dico, TransformerFichierListe_Texte, TransformerListeFichier_Dico, TransformerListeFichier_Texte
+from gestionnaire_fichier import TransformerFichierListe_Dico,\
+                                 TransformerFichierListe_Texte,\
+                                 TransformerListeFichier_Dico,\
+                                 TransformerListeFichier_Texte
 
 class CorrecteurAutomatique(object):
     def __init__(self, seuil, dictionnaire):
@@ -85,20 +88,23 @@ if __name__ == '__main__':
     parser.add_argument('seuil', action="store", type=int)
     parser.add_argument('strategie', action="store", type=int, help="1 = comparer chacun des mots avec ceux dans les dictionnaires.    \
                                                                        2 = produit les mots qui, suite à une opérations élémentaire sont dans les dictionnaires.")
-    parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
-
+    parser.add_argument("-v", "--verbose", help="Niveau de renseignement envoyé à l'utilisateur augmenté", action="store")
     arguments = parser.parse_args()
 
     if arguments.verbose:
         logging.basicConfig(level=logging.DEBUG)
 
 
-
     # Construction de l'objet dictionnaire fourni immuable
     dictionnaire_fixe = Dictionnaire(TransformerFichierListe_Dico(arguments.dic_text), False)
 
     # Construction de l'objet dictionnaire perso muable
-    dictionnaire_personnel = Dictionnaire(TransformerFichierListe_Dico(arguments.dic_perso), True)
+    liste_mots_dic_perso = []
+    try:
+        liste_mots_dic_perso = TransformerFichierListe_Dico(arguments.dic_perso)
+    except FileNotFoundError as f:
+        print("Vous avez choisi un ficher inexistant.")
+    dictionnaire_personnel = Dictionnaire(liste_mots_dic_perso, True)
 
     # L'ensemble de dictionnaire permet d'encapsuler le contenu des 2 dictionnaires à travers une interface unique
     ensemble_dictionnaire = EnsembleDictionnaire([dictionnaire_fixe, dictionnaire_personnel], arguments.strategie)

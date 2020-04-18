@@ -20,7 +20,6 @@ class Dictionnaire(object):
     def compter_nombre_mots(self):
         return len(self.mots_dico)
 
-
     def ajouter_mot(self, mot):
         if self.muable:
             if isinstance(mot, str):
@@ -28,7 +27,6 @@ class Dictionnaire(object):
                     self.mots_dico.append(mot)
             else:
                 raise TypeError("TypeError exception thrown")
-
 
     def chercher_mot(self, mot):
         return mot in self.mots_dico
@@ -50,13 +48,13 @@ class EnsembleDictionnaire(Dictionnaire):
     programme principal. Nous y retrouvons par conséquent les mêmes noms
     de méthodes que dans la classe dictionnaire ci-dessus.
     '''
-    def __init__(self, dictionnaires, strategie = 1):
+    def __init__(self, dictionnaires, strategie):
         self.strategie = strategie
         print(f"Nous allons corriger le texte grâce à la stratégie {self.strategie}.")
         if isinstance(dictionnaires, list):
             self.dictionnaires = dictionnaires
         else:
-            raise TypeError("Ce n'est pas une liste")
+            raise TypeError("Ce n'est pas une liste.")
 
     def compter_nombre_mots(self):
         mots = 0

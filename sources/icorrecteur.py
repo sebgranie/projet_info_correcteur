@@ -1,8 +1,10 @@
 import argparse
 import logging
 from dictionnaire import Dictionnaire, EnsembleDictionnaire
-from gestionnaire_fichier import TransformerFichierListe_Dico, TransformerFichierListe_Texte, TransformerListeFichier_Dico, TransformerListeFichier_Texte
-
+from gestionnaire_fichier import TransformerFichierListe_Dico,\
+                                 TransformerFichierListe_Texte,\
+                                 TransformerListeFichier_Dico,\
+                                 TransformerListeFichier_Texte
 class CorrecteurInteractif(object):
     def __init__(self, dictionnaire):
         self.dictionnaire = dictionnaire
@@ -27,7 +29,6 @@ class CorrecteurInteractif(object):
                     mot_trouves +=1
                 corrige.append(mot)
             else:
-                seuil = int(len(mot)/2)
                 mot_inconnu +=1
                 mot_corrige = self.CorrigeMot(mot, ligne)
 
@@ -60,9 +61,7 @@ class CorrecteurInteractif(object):
         if not mots_possibles:
             print(f"Aucun mots n'ont été trouvé dans les dictionnaires pour le mot érroné {mot}")
         else:
-
             mots_possibles = sorted(mots_possibles)
-
             print(f"\nLe mot {mot} (ligne {ligne}) n'est pas dans les dictionnaires.\n")
             print(f"Seuil : {seuil}")
             for i in range(len(mots_possibles)):
@@ -109,7 +108,7 @@ if __name__ == "__main__":
     parser.add_argument('dic_perso', action="store", type=str)
     parser.add_argument('strategie', action="store", type=int, help="1 = comparer chacun des mots avec ceux dans les dictionnaires.    \
                                                                        2 = produit les mots qui, suite à une opérations élémentaire sont dans les dictionnaires.")
-    parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
+    parser.add_argument("-v", "--verbose", help="Niveau de renseignement envoyé à l'utilisateur augmenté", action="store_true")
     arguments = parser.parse_args()
 
     if arguments.verbose:
@@ -123,7 +122,7 @@ if __name__ == "__main__":
     try:
         liste_mots_dic_perso = TransformerFichierListe_Dico(arguments.dic_perso)
     except FileNotFoundError as f:
-        print("Vous avez choisi un fichier inexistant.")
+        print("Vous avez choisi un ficher inexistant.")
     dictionnaire_personnel = Dictionnaire(liste_mots_dic_perso, True)
 
     # L'ensemble de dictionnaire permet d'encapsuler le contenu des 2 dictionnaires à travers une interface unique
