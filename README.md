@@ -47,7 +47,7 @@ Légende:
 
 Executer les commandes suivantes dans le terminal au niveau du dossier `projet_info_correcteur` où se trouvent tous les fichiers requis par le programme:
 Nous accèderons aux fichiers sources et ressources grâce à des chemins relatifs comme montré ci-dessous.
-Nous utiliserons le texte `ressources/exemple1.txt` comme exemple de texte à corriger.
+Nous utiliserons le texte `exemple1.txt` comme exemple de texte à corriger.
 
 
 #### 1.4.1 Correcteur Interactif:
@@ -55,29 +55,29 @@ Nous utiliserons le texte `ressources/exemple1.txt` comme exemple de texte à co
 La commande suivante permet de lister les arguments obligatoires et optionnels de ce correcteur:
 
 ```sh
-python3 sources/icorrecteur.py --help
+python3 icorrecteur.py --help
 ```
 
 Voici un exemple sur system **Unix** (Linux et macOS):
 
 ```sh
-python3 sources/icorrecteur.py ressources/exemple1.txt \
-                               ressources/exemple1_corrige.txt \
-                               ressources/exemple1_correction.txt \
-                               ressources/frgut.dic \
-                               ressources/dictionnaire_perso.dic \
-                               1
+python3 icorrecteur.py exemple1.txt \
+                       exemple1_corrige.txt \
+                       exemple1_correction.txt \
+                       frgut.dic \
+                       dictionnaire_perso.dic \
+                       1
 ```
 
 Voici le même exemple sur **Windows**:
 
 ```sh
-python3 sources\icorrecteur.py ressources\exemple1.txt \
-                               ressources\exemple1_corrige.txt \
-                               ressources\exemple1_correction.txt \
-                               ressources\frgut.dic \
-                               ressources\dictionnaire_perso.dic \
-                               1
+python3 icorrecteur.py exemple1.txt \
+                       exemple1_corrige.txt \
+                       exemple1_correction.txt \
+                       frgut.dic \
+                       dictionnaire_perso.dic \
+                       1
 ```
 En précisant la commande `-v` suite à ceux listé ci-dessus, elle permet en tant qu'utilisateur du programme de recevoir plus d'information de la part du programme en affichant plus d'informations dans le terminal.
 
@@ -86,31 +86,31 @@ En précisant la commande `-v` suite à ceux listé ci-dessus, elle permet en ta
 La commande suivante permet de lister les arguments obligatoires et optionnels de ce correcteur:
 
 ```sh
-python3 sources/acorrecteur.py --help
+python3 acorrecteur.py --help
 ```
 
 * **Unix** (Linux et macOS):
 
 ```sh
-python3 sources/acorrecteur.py ressources/exemple1.txt \
-                               ressources/exemple1_corrige.txt \
-                               ressources/exemple1_correction.txt \
-                               ressources/frgut.dic \
-                               ressources/dictionnaire_perso.dic \
-                               4 \
-                               1
+python3 acorrecteur.py exemple1.txt \
+                       exemple1_corrige.txt \
+                       exemple1_correction.txt \
+                       frgut.dic \
+                       dictionnaire_perso.dic \
+                       4 \
+                       1
 ```
 
 * **Windows**:
 
 ```sh
-python3 sources\acorrecteur.py ressources\exemple1.txt \
-                               ressources\exemple1_corrige.txt \
-                               ressources\exemple1_correction.txt \
-                               ressources\frgut.dic \
-                               ressources\dictionnaire_perso.dic \
-                               4 \
-                               1
+python3 acorrecteur.py exemple1.txt \
+                       exemple1_corrige.txt \
+                       exemple1_correction.txt \
+                       frgut.dic \
+                       dictionnaire_perso.dic \
+                       4 \
+                       1
 ```
 
 Le fonctionnement de la commande `-v`reste valable également pour le correcteur automatique.
@@ -135,9 +135,9 @@ Voici les resultats attendus:
 platform darwin -- Python 3.7.7, pytest-5.4.1, py-1.8.1, pluggy-0.13.1
 rootdir: <chemin>/projet_info_correcteur
 collected 8 items
-tests/dictionnaire_test.py ....                                                    [ 50%]
-tests/distance_entre_mots_test.py .                                                [ 62%]
-tests/gestionnaire_fichier_test.py ...                                             [100%]
+dictionnaire_test.py ....                                                           [ 50%]
+distance_entre_mots_test.py .                                                       [ 62%]
+gestionnaire_fichier_test.py ...                                                    [100%]
 
 =================================== 8 passed in 0.45s ====================================
 ```
